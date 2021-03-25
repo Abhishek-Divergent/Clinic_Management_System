@@ -17,20 +17,20 @@ public class LabTestCrudDOA {
 		this.connectionInterface = connectionInterface;
 	}
 
-	public void delete(int a) throws SQLException {
+	public int  delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("delete from LabTest where labtest_id=" + a + "");
+		return statement.executeUpdate("delete from LabTest where labtest_id=" + a + "");
 	}
 
-	public void create(int labtest_id, String labtest_name, int labtest_price) throws SQLException {
+	public int create(int labtest_id, String labtest_name, int labtest_price) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate(
+		return statement.executeUpdate(
 				"insert into labtest  values (" + labtest_id + ", '" + labtest_name + "','" + labtest_price + "')");
 	}
 
@@ -54,12 +54,12 @@ public class LabTestCrudDOA {
 		return list;
 	}
 
-	public void update(int rowid, String labtest_name, int labtest_price ) throws SQLException {
+	public int update(int rowid, String labtest_name, int labtest_price ) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("update labtest set labtest_name='" + labtest_name + "',labtest_price="
+	return	statement.executeUpdate("update labtest set labtest_name='" + labtest_name + "',labtest_price="
 				+ labtest_price + " where labtest_id=" + rowid);
 	}
 

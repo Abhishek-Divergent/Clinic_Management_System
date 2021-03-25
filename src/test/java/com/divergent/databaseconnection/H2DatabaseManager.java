@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 public class H2DatabaseManager implements JDBCConnectionInterface {
 
-	public static String DB_URL = "jdbc:h2:mem:";
+	public static String DB_URL = "jdbc:h2:~/test";
 
 	@Override
 	public Connection connection() throws SQLException {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(DB_URL	);
+			connection = DriverManager.getConnection(DB_URL,"sa",""	);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

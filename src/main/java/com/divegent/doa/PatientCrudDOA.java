@@ -13,27 +13,28 @@ import com.divergent.databaseconnection.JDBCConnectionInterface;
 public class PatientCrudDOA {
 	JDBCConnectionInterface connectionInterface;
 
-	public PatientCrudDOA(JDBCConnectionInterface connectionInterface) {
+	public PatientCrudDOA(JDBCConnectionInterface connectionInterface) { 
 		this.connectionInterface = connectionInterface;
 	}
 
-	public void create(int p_id, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
+	public int create(int p_id, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
 			String p_address) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("insert into patient values (" + p_id + ", '" + p_name + "'," + p_age + ", '" + p_gender
-				+ "', '" + p_contact + "', " + p_weight + ", '" + p_address + "')");
-
+		int a = statement.executeUpdate("insert into patient values (" + p_id + ", '" + p_name + "'," + p_age + ", '"
+				+ p_gender + "', '" + p_contact + "', " + p_weight + ", '" + p_address + "')");
+		return a;
 	}
 
-	public void delete(int a) throws SQLException {
+	public int delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("delete from patient where p_id=" + a + "");
+		int b=statement.executeUpdate("delete from patient where p_id=" + a + "");
+     return b;   
 	}
 
 	public List<PatientDto> read()throws SQLException{
@@ -60,16 +61,16 @@ public class PatientCrudDOA {
 		return list;
 	}
 
-	public void update(int rowid, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
+	public int update(int rowid, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
 			String p_address) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("update patient set p_name='" + p_name + "', p_age=" + p_age + ",p_gender ='" + p_gender
-				+ "',p_contact='" + p_contact + "',p_weight=" + p_weight + ",p_address='" + p_address + "' where p_id="
-				+ rowid);
-
+		int b = statement.executeUpdate("update patient set p_name='" + p_name + "', p_age=" + p_age + ",p_gender ='"
+				+ p_gender + "',p_contact='" + p_contact + "',p_weight=" + p_weight + ",p_address='" + p_address
+				+ "' where p_id=" + rowid);
+		return b;
 	}
 
 }

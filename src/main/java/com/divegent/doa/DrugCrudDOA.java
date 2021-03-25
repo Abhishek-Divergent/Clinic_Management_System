@@ -17,20 +17,20 @@ public class DrugCrudDOA {
 		this.connectionInterface = connectionInterface;
 	}
 
-	public void delete(int a) throws SQLException {
+	public int delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("delete from drugs where drugs_id=" + a + "");
+	  return	statement.executeUpdate("delete from drugs where drugs_id=" + a + "");
 	}
 
-	public void create(int drugs_id, String drugs_name, String drugs_description) throws SQLException {
+	public int create(int drugs_id, String drugs_name, String drugs_description) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate(
+	return	statement.executeUpdate(
 				"insert into drugs  values (" + drugs_id + ", '" + drugs_name + "','" + drugs_description + "')");
 	}
 
@@ -53,12 +53,12 @@ public class DrugCrudDOA {
 
 	}
 
-	public void update(int rowid, String drugs_name, String drugs_description) throws SQLException {
+	public int update(int rowid, String drugs_name, String drugs_description) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("update drugs set drugs_name='" + drugs_name + "',drugs_description='"
+		return statement.executeUpdate("update drugs set drugs_name='" + drugs_name + "',drugs_description='"
 				+ drugs_description + "' where drugs_id=" + rowid);
 	}
 

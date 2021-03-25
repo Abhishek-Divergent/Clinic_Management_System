@@ -17,22 +17,22 @@ public class AppoinmentDOA {
 		this.connectionInterface = connectionInterface;
 	}
 
-	public void create(int appoiment_id, int doc_id, int patient_id, String doc_name, String patient_name,
+	public int create(int appoiment_id, int doc_id, int patient_id, String doc_name, String patient_name,
 			String problem, String date, String time) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("insert into appoinment values( " + appoiment_id + "," + doc_id + "," + patient_id
+	return	statement.executeUpdate("insert into appoinment values( " + appoiment_id + "," + doc_id + "," + patient_id
 				+ ", '" + doc_name + "','" + patient_name + "','" + problem + "','" + date + "','" + time + "')");
 	}
 
-	public void delete(int a) throws SQLException {
+	public int delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("delete from  appoinment where appoinment_id=" + a + "");
+	return	statement.executeUpdate("delete from  appoinment where appoinment_id=" + a + "");
 	}
 
 	

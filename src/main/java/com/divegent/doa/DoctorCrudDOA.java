@@ -1,4 +1,4 @@
-package com.divegent.doa;
+  package com.divegent.doa;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,35 +49,37 @@ public class DoctorCrudDOA {
 		return doctorDtos;
 	}
 
-	public void create(int doc_id, String doc_username, String doc_password, String doc_name, String doc_contact,
+	public int create(int doc_id, String doc_username, String doc_password, String doc_name, String doc_contact,
 			String doc_speciality, int doc_fees) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("insert into doctor values (" + doc_id + ", '" + doc_username + "','" + doc_password
+		int a=statement.executeUpdate("insert into doctor values (" + doc_id + ", '" + doc_username + "','" + doc_password
 				+ "', '" + doc_name + "', '" + doc_contact + "','" + doc_speciality + "'," + doc_fees + ")");
-
+        return a;
 	}
 
-	public void update(int rowid, String doc_name, String doc_username, String doc_password, String doc_contact,
+	public int update(int rowid,  String doc_username, String doc_password,String doc_name, String doc_contact,
 			String doc_speciality, int doc_fees) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("update doctor set doc_name = '" + doc_name + "' ,doc_username = '" + doc_username
+	int a= statement.executeUpdate("update doctor set doc_name = '" + doc_name + "' ,doc_username = '" + doc_username
 				+ "', doc_password = '" + doc_password + "', doc_contact = '" + doc_contact + "', doc_speciality = '"
 				+ doc_speciality + "',doc_fees = " + doc_fees + " where doc_id = " + rowid);
-
+		return  a;
+	
 	}
 
-	public void delete(int a) throws SQLException {
+	public int delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		statement.executeUpdate("delete from doctor where doc_id=" + a + "");
+		int b=statement.executeUpdate("delete from doctor where doc_id=" + a + "");
+	return b;
 	}
 }
