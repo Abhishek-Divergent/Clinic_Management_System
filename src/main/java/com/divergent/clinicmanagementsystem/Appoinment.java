@@ -1,22 +1,35 @@
 package com.divergent.clinicmanagementsystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
 
+import com.divegent.doa.AppoinmentDOA;
+import com.divergent.clinicmanagementsystem.dto.AppoinmentDto;
+import com.divergent.databaseconnection.JDBCConnection;
+
+/**
+ * in this is class admin will appoint a doctor to patient
+ * 
+ * @author JAI MAHAKAL
+ *
+ */
 public class Appoinment {
+
+	public Scanner scobj = new Scanner(System.in);
+
+	/**
+	 * appointment panel will perform all operation create ,update, delete and read
+	 */
+
 	public void appoinmentPanel() {
-		@SuppressWarnings("resource")
-		Scanner scobj = new Scanner(System.in);
+
 		p_panel: while (true) {
-		
+
 			System.out.println("\n************************Appoinment CRUD************************\n");
 			System.out.println("1: Appoinment Create");
-     	    System.out.println("2: Appoinment Read");
-//		System.out.println("3:LabTest Update\n");
-         	System.out.println("4: Appoinment Delete");
+			System.out.println("2: Appoinment Read");
+//		    System.out.println("3:LabTest Update\n");
+			System.out.println("4: Appoinment Delete");
 			System.out.println("5: Exit \n");
 			System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
@@ -26,7 +39,7 @@ public class Appoinment {
 				appoinmentCreate();
 				break;
 			case 2:
-				 appoinmentRead();
+				appoinmentRead();
 				break;
 			case 3:
 				// labTestUpdate();
@@ -37,71 +50,62 @@ public class Appoinment {
 			case 5:
 				break p_panel;
 			default:
-				//throw new IllegalArgumentException("Unexpected value: " + choice);
+				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
-			scobj.close();
+
 		}
 
 	}
 
+	/**
+	 * , patient_id, ,, , , , this method will read appoinment to patient
+	 */
 	private void appoinmentRead() {
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-
+		AppoinmentDOA appoinmentDOA = new AppoinmentDOA(new JDBCConnection());
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicmanagementsystem", "root",
-					"root");
-			if (connection != null) {
-				statement = connection.createStatement();
+			List<AppoinmentDto> list = appoinmentDOA.read();
+			System.out.printf(
+					"appoinment_id        patient_id         doc_id        patient_name        doc_name        problem        date         time\n");
+			for (AppoinmentDto appoinmentDto : list) {
+				System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ", appoinmentDto.getAppoinmentid(),
+						appoinmentDto.getPatientid(), appoinmentDto.getDocid(), appoinmentDto.getDocname(),
+						appoinmentDto.getPatientname(), appoinmentDto.getProblem(), appoinmentDto.getDocid(),
+						appoinmentDto.getTime());
+				System.out.println("\n");
+			}
 
-				resultSet = statement.executeQuery("select *from appoinment");
-
-				while (resultSet.next()) {
-					System.out.printf("%s\t  %s\t   %s\t  %s\t  %s\t  %s\t  %s\t %s ", resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
-							resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8));
-					System.out.println("\n");
-				}
-			} else
-				System.err.println("\n----Connection is Null----\n");
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
+
 	}
+
+	/**
+	 * this method will Delete appoinmented patient
+	 * 
+	 */
 
 	private void appoinmentDelete() {
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-		Scanner scobj = new Scanner(System.in);
-
+		AppoinmentDOA appoinmentDOA = new AppoinmentDOA(new JDBCConnection());
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicmanagementsystem", "root",
-					"root");
-			if (connection != null) {
-				statement = connection.createStatement();
-				System.out.print("\n----Enter Appoinment ID  To Delete Drug --");
-				int a = scobj.nextInt();
-				int b = statement.executeUpdate("delete from  appoinment where appoinment_id=" + a + "");
-				if (b == 0) {
-					System.out.println("\n---- Appoinment Not Delete----\n");
-				} else
-					System.out.println("\n----Appoinment Delete----\n");
-			} else
-				System.err.println("\n----Connection is Null----\n");
+			System.out.print("\n----Enter Appoinment ID  To Delete Drug --");
+			int a = scobj.nextInt();
+			appoinmentDOA.delete(a);
+			System.out.println("\n----Appoinment Delete----\n");
 		} catch (Exception e) {
 			System.err.println(e);
+			System.out.println("\n---- Appoinment Not Delete----\n");
 		}
-		
+
 	}
-	
-	
+
+	/**
+	 * this method will create appoinment to patient
+	 */
 
 	private void appoinmentCreate() {
-		Scanner scobj = new Scanner(System.in);
 		int appoiment_id;
 		int doc_id;
 		int patient_id;
@@ -109,11 +113,6 @@ public class Appoinment {
 		String doc_name;
 		String problem;
 		String date;
-
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-
 		System.out.print("\nEnter  Appoinment Id --");
 		appoiment_id = scobj.nextInt();
 
@@ -135,19 +134,14 @@ public class Appoinment {
 		System.out.print("\nEnter  Date  --");
 		date = scobj.nextLine();
 		System.out.print("\nEnter  Time  --");
-		String time= scobj.nextLine();
+		String time = scobj.nextLine();
+		AppoinmentDOA Adoa = new AppoinmentDOA(new JDBCConnection());
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicmanagementsystem", "root",
-					"root");
-			if (connection != null) {
-				statement = connection.createStatement();
-
-				statement.executeUpdate("insert into appoinment values( "+appoiment_id+","+doc_id+","+patient_id+", '"+doc_name+"','"+ patient_name+"','"+problem+"','"+date+"','"+time+"')");
-				System.out.println("\n-------Value Has Inserted-------");
-			} else
-				System.err.println("\n----Connection is Null----\n");
+			Adoa.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
+			System.out.println("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
 			System.err.println(e);
+			System.out.println("\n-------Value Has NOT Inserted-------");
 		}
 
 	}

@@ -1,58 +1,64 @@
 package com.divergent.clinicmanagementsystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Scanner;
+
+import com.divergent.databaseconnection.JDBCConnectionInterface;
+
 import java.sql.*;
 
 public class Admin {
-	Scanner scobj = new Scanner(System.in);
-	PatientDOA patientDOA = new PatientDOA();
-	DoctorDOA crudDoctor=new DoctorDOA();
-	DrugsDOA drugsDOA=new DrugsDOA();
-	LabTestDOA labTestDOA=new LabTestDOA();
-	Appoinment appoinment=new Appoinment();
-/** this method will connect  to the database to verify  Admin 
- * method will verify Admin password and username 
- * Method will return Boolean Value
- * @return  
- */
-	 protected boolean admin_Login() {
-		String admin_username;
-		String admin_password;
+
+	JDBCConnectionInterface connectionInterface;
+
+	public Admin(JDBCConnectionInterface connectionInterface) {
+		this.connectionInterface = connectionInterface;
+	}
+
+	public Scanner scobj = new Scanner(System.in);
+	PatientCrud patientCrud = new PatientCrud();
+	DoctorCrud crudDoctor = new DoctorCrud();
+	DrugsCrud drugsCrud = new DrugsCrud();
+	LabTestCrud labTestCrud = new LabTestCrud();
+	Appoinment appoinment = new Appoinment();
+
+	/**
+	 * this method will connect to the database to verify Admin method will verify
+	 * Admin password and username Method will return Boolean Value
+	 * 
+	 * @return
+	 */
+	public boolean admin_Login()throws SQLException{
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet rst = null;
 		System.out.println("************************ADMIN PANEL************************\n");
 		System.out.print("\nEnter Admin User Name  ");
-		admin_username = scobj.nextLine().trim();
+		String	admin_username = scobj.nextLine().trim();
 		System.out.print("\nEnter Admin Password   ");
-		admin_password = scobj.nextLine().trim();
-
-		try {
-		
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicmanagementsystem",
-					"root", "root");
-			if (connection != null) {
-				Statement statement = connection.createStatement();
-				ResultSet rst = statement.executeQuery("select *from admin where adminid='" + admin_username
-						+ "' and adminpassword='" + admin_password + "'");
-				if (rst.next() == true) {
-					System.out.println("\n----SUCCESSFULLY LOGIN----\n");
-					return true;
-				} else {
-					System.out.println("\n----Try Again----\n");
-					return false;
-				}
-
-			} else
-				System.err.println("\n----Connection is Null----\n");
-		} catch (Exception e) {
-			System.err.println(e);
+		String admin_password = scobj.nextLine().trim();
+			connection = connectionInterface.connection();
+			if(connection!=null) {
+			statement = connection.createStatement();
+			rst = statement.executeQuery("select *from admin where adminid='" + admin_username + "' and adminpassword='"
+					+ admin_password + "'");
+			if (rst.next() == true) {
+				System.out.println("\n----SUCCESSFULLY LOGIN----\n");
+				return true;
+			} else {
+				System.out.println("\n----Try Again----\n");
+				return false;
+			}
+		} else {
+			System.out.println("Connection is Null ");
 		}
 		return false;
 	}
-/**
- *  this method take input to perform admin operation
- * @return
- */
+
+	/**
+	 * this method take input to perform admin operation
+	 * 
+	 * @return
+	 */
 	public boolean admin_pannel() {
 		adminpanel: while (true) {
 			System.out.println("************************ADMIN PANEL************************\n");
@@ -63,27 +69,30 @@ public class Admin {
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1: {
-				patientDOA.patientPanel();
+				patientCrud.patientPanel();
 				break;
 			}
 			case 2:
-				 crudDoctor.DoctorPanel();
-				 break;
+				crudDoctor.DoctorPanel();
+				break;
 			case 3:
-				 drugsDOA.DrugsPanel();
-				 break;
+				drugsCrud.DrugsPanel();
+				break;
 			case 4:
-				labTestDOA.labTestPanel();break;
+				labTestCrud.labTestPanel();
+				break;
 			case 5:
-				appoinment.appoinmentPanel();break;
+				appoinment.appoinmentPanel();
+				break;
 			case 7:
 				break adminpanel;
 			default:
-				//throw new IllegalArgumentException("Unexpected value: " + choice);
+				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
-		return true;	}
-  
+		return true;
+	}
+
 }
