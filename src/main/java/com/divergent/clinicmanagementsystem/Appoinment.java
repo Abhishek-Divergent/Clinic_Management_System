@@ -81,7 +81,6 @@ public class Appoinment {
 			myLogger.warning(e.getMessage());
 			myLogger.info(e.toString());
 
-			// System.err.println(e);
 		}
 
 	}
@@ -98,12 +97,9 @@ public class Appoinment {
 			int a = scobj.nextInt();
 			appoinmentDOA.delete(a);
 			myLogger.info("\n----Appoinment Delete----\n");
-
-			// System.out.println("\n----Appoinment Delete----\n");
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
 			myLogger.info("\n---- Appoinment Not Delete----\n");
-			// System.out.println("\n---- Appoinment Not Delete----\n");
 		}
 
 	}
@@ -147,7 +143,6 @@ public class Appoinment {
 			Adoa.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
 			myLogger.info("\n-------Value Has  Inserted-------");
 
-			// System.out.println("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
 			myLogger.info("\n-------Value Has NOT Inserted-------");

@@ -48,7 +48,7 @@ public class PatientCrud {
 			case 5:
 				break p_panel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
+				
 				myLogger.warning("--- -Worng Choioce---- \n");
 				// System.out.println("--- -Worng Choioce---- \n");
 				continue;
@@ -65,7 +65,7 @@ public class PatientCrud {
 			System.out.println("\n-------Patient--------");
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
-			// System.err.println(e);
+			
 		}
 
 	}
@@ -97,13 +97,10 @@ public class PatientCrud {
 			p_contact = scobj.nextLine().trim();
 			pdoa.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
 			myLogger.info("\n-------Value Has Updated-------");
-			// System.out.println("\n-------Value Has Updated-------");
 		} catch (Exception e) {
 
 			myLogger.warning(e.getMessage());
 			myLogger.warning("\n-------Value NOT Updated-------");
-//			System.err.println(e);
-//			System.out.println("\n-------Value NOT Updated-------");
 		}
 
 	}
@@ -123,7 +120,6 @@ public class PatientCrud {
 
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
-			// System.err.println(e);
 		}
 	}
 
@@ -155,14 +151,10 @@ public class PatientCrud {
 		try {
 			pdoa.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
 			myLogger.info("\n-------Value Has Inserted-------");
-			// System.out.println("\n-------Value Has Inserted-------");
 		} catch (SQLException e) {
 
 			myLogger.warning(e.getMessage());
 			myLogger.warning("\n-------Value NOT Insert-------");
-
-//			System.err.println(e);
-//			System.out.println("\n-------Value Has  Not Inserted-------");
 		}
 
 	}

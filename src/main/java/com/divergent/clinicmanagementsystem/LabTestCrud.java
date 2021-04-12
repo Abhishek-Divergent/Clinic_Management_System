@@ -17,9 +17,6 @@ public class LabTestCrud {
 
 		p_panel: while (true) {
 			myLogger.info("\n************************LabTest CRUD************************\n");
-
-			// System.out.println("\n************************LabTest
-			// CRUD************************\n");
 			System.out.println("1:LabTest Create ");
 			System.out.println("2:LabTest Read ");
 			System.out.println("3:LabTest Update  ");
@@ -47,7 +44,6 @@ public class LabTestCrud {
 			case 5:
 				break p_panel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				myLogger.warning("--- -Worng Choioce---- \n");
 				// System.out.println("--- -Worng Choioce---- \n");
 				continue;

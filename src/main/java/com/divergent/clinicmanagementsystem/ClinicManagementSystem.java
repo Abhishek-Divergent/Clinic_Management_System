@@ -14,17 +14,18 @@ import com.divergent.databaseconnection.JDBCConnection;
  *
  */
 public class ClinicManagementSystem {
-	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
+	private static final Logger myLogger = Logger
+			.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
 	public static Scanner scobj = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		Admin adminobj = new Admin(new JDBCConnection());
 		Doctor doctor = new Doctor(new JDBCConnection());
-		myLogger.setLevel(Level.WARNING);
+		myLogger.setLevel(Level.FINE);
 		while (true) {
-		    myLogger.info("**************Clinic Management System**************\n");
-		    System.out.println("Select Option\n");
-		    System.out.println("1. Admin\n2. Doctor\n3. Exit");
+			myLogger.info("**************Clinic Management System**************\n");
+			System.out.println("Select Option\n");
+			System.out.println("1. Admin\n2. Doctor\n3. Exit");
 			int choice = 0;
 			System.out.println("\nEnter Choice The Option----  ");
 			choice = scobj.nextInt();
@@ -39,7 +40,10 @@ public class ClinicManagementSystem {
 						System.out.println("\n------Press Y Then Enter Continue------  \n");
 					}
 				} catch (SQLException e) {
+					myLogger.fine(e.getMessage());
 					myLogger.warning(e.getMessage());
+					myLogger.info("Connection is not establish");
+					System.out.println("\n------Press Y Then Enter Continue------  \n");
 				}
 				scobj.next().charAt(0);
 				break;
@@ -54,8 +58,10 @@ public class ClinicManagementSystem {
 						System.out.println("\n------Press Y Then Enter Continue------  \n");
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					myLogger.info("Connection is not establish");
+					myLogger.fine(e.getMessage());
+					myLogger.warning(e.getMessage());
+					System.out.println("\n------Press Y Then Enter Continue------  \n");
 				}
 				scobj.next().charAt(0);
 				break;
@@ -64,7 +70,7 @@ public class ClinicManagementSystem {
 				myLogger.info("\n------Thank you!  Application has shut down Run Again ");
 				System.exit(0);
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
+
 				myLogger.warning("--- -Worng Choioce---- \n");
 				continue;
 			}

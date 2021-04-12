@@ -91,13 +91,12 @@ public class Admin {
 				break;
 			case 5:
 				myLogger.info("Appointment Operation");
-				
+
 				appoinment.appoinmentPanel();
 				break;
 			case 7:
 				break adminpanel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				myLogger.warning("--- -Worng Choioce---- \n");
 				continue;
 			}

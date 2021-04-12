@@ -18,9 +18,6 @@ public class DrugsCrud {
 
 		p_panel: while (true) {
 			myLogger.info("\n************************Drugs CRUD************************\n");
-
-			// System.out.println("\n************************Drugs
-			// CRUD************************\n");
 			System.out.println("1: Drugs Create");
 			System.out.println("2: Drugs Read");
 			System.out.println("3: Drugs Update");
@@ -48,9 +45,7 @@ public class DrugsCrud {
 			case 5:
 				break p_panel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				myLogger.warning("--- -Worng Choioce---- \n");
-				//System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
@@ -74,11 +69,11 @@ public class DrugsCrud {
 			doa.update(rowid, Drugs_name, Drugs_description);
 			
 			myLogger.info("\n-------Value Has Updated-------");
-			//System.out.println("\n-------Value Has Updated-------");
+			
 		} catch (Exception e) {
 			   myLogger.warning(e.getMessage());
 			myLogger.info("\n-------Value Has Updated-------");
-			//System.out.println("\n-------Value Has Not Updated-------");
+			
 		}
 	}
 
@@ -94,7 +89,7 @@ public class DrugsCrud {
 			}
 		} catch (SQLException e) {
 	        myLogger.warning(e.getMessage());
-			//e.printStackTrace();
+			
 		}
 
 	}
@@ -117,7 +112,7 @@ public class DrugsCrud {
 		try {
 			doa.create(Drugs_id, Drugs_name, Drugs_description);
 			myLogger.info("\n-------Value Has Updated-------");
-			//System.out.println("\n-------Value Has Inserted-------");
+			
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
 			myLogger.info("\n-------Value Has Not  Updated-------");
@@ -131,11 +126,11 @@ public class DrugsCrud {
 			int a = scobj.nextInt();
 			doa.delete(a);
 			myLogger.info("\n---- Drug Delete----\n");
-			//System.out.println("\n---- Drug Delete----\n");
+			
 		} catch (Exception e) {
-			// System.err.println(e);
+			myLogger.warning(e.getMessage());
 			myLogger.info("\n---- Drug Not Delete----\n");
-			//System.out.println("\n---- Drug Not Delete----\n");
+	
 		}
 
 	}

@@ -45,13 +45,12 @@ public class Doctor {
 
 			if (rst.next() == true) {
 				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
-				// System.out.println("\n----SUCCESSFULLY LOGIN----\n");
+
 				doctortempusername = doctor_username;
 				return true;
 
 			} else {
 				myLogger.info("\n----Try Again----\n");
-				// System.out.println("\n----Try Again----\n");
 				return false;
 			}
 		} else {
@@ -63,11 +62,11 @@ public class Doctor {
 	public void doctor_pannel() {
 		myLogger.info("Panel for doctor to select  option");
 		doctorpanel: while (true) {
-
 //			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
 //					+ "3. Check Patient History and His Prescription\n" + "4. Exit\n");
-			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n" + "3. Exit\n");
-		System.out.print("\nEnter Choice The Option----  ");
+			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
+					+ "3. Exit\n");
+			System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
@@ -79,14 +78,12 @@ public class Doctor {
 				addPrescription();
 				break;
 			case 3:
-				
+
 				break doctorpanel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
 				myLogger.warning("--- -Worng Choioce---- \n");
 				continue;
 			}
-
 		}
 
 	}
@@ -117,11 +114,12 @@ public class Doctor {
 			statement = connection.createStatement();
 			statement.executeUpdate("insert into  priscription  values(" + priscription_id + "," + doc_id + "," + p_id
 					+ ",'" + priscription + "','" + note + "')");
-			// System.out.println("\n-------Value Has Inserted-------");
+			
 			myLogger.info("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
 			myLogger.warning(e.getMessage());
-			// System.err.println(e);
+			myLogger.info("\"\\n-------Value Has Inserted-------\"");
+			
 		}
 	}
 
@@ -150,8 +148,7 @@ public class Doctor {
 				System.out.println("\n");
 			}
 		} catch (Exception e) {
-			//System.err.println(e);
-		   myLogger.warning(e.getMessage());
+			myLogger.warning(e.getMessage());
 		}
 	}
 }

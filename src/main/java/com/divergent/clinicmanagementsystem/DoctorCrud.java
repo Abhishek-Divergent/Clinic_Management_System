@@ -43,9 +43,9 @@ public class DoctorCrud {
 			case 5:
 				break p_panel;
 			default:
-				// throw new IllegalArgumentException("Unexpected value: " + choice);
+
 				myLogger.info("--- -Worng Choioce---- \n");
-				// System.out.println("--- -Worng Choioce---- \n");
+
 				continue;
 			}
 		}
@@ -58,11 +58,11 @@ public class DoctorCrud {
 			int a = scobj.nextInt();
 			doa.delete(a);
 			myLogger.info("\n----Doctor  Deleted --");
-			// System.out.print("\n----Doctor Deleted --");
+
 		} catch (SQLException e) {
 			myLogger.warning(e.getMessage());
 			myLogger.info("\n----Doctor Not Deleted --");
-			// System.out.print("\n----Doctor Not Deleted --");
+
 		}
 	}
 
@@ -114,7 +114,6 @@ public class DoctorCrud {
 			}
 		} catch (SQLException e) {
 			myLogger.warning(e.getMessage());
-			// System.out.println(e);
 		}
 
 	}
