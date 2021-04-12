@@ -2,6 +2,8 @@ package com.divergent.clinicmanagementsystem;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergent.databaseconnection.JDBCConnection;
 
@@ -12,18 +14,20 @@ import com.divergent.databaseconnection.JDBCConnection;
  *
  */
 public class ClinicManagementSystem {
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
 	public static Scanner scobj = new Scanner(System.in);
+
 	public static void main(String[] args) {
 		Admin adminobj = new Admin(new JDBCConnection());
 		Doctor doctor = new Doctor(new JDBCConnection());
-		
+		myLogger.setLevel(Level.WARNING);
 		while (true) {
-			System.out.println("**************Clinic Management System**************\n");
-			System.out.println("Select Option\n");
-			System.out.println("1. Admin\n2. Doctor\n3. Exit");
-			int choice=0; 
-			System.out.print("\nEnter Choice The Option----  ");
-				 choice = scobj.nextInt();
+		    myLogger.info("**************Clinic Management System**************\n");
+		    System.out.println("Select Option\n");
+		    System.out.println("1. Admin\n2. Doctor\n3. Exit");
+			int choice = 0;
+			System.out.println("\nEnter Choice The Option----  ");
+			choice = scobj.nextInt();
 			admin: switch (choice) {
 			case 1: {
 				try {
@@ -31,11 +35,11 @@ public class ClinicManagementSystem {
 						adminobj.admin_pannel();
 						break admin;
 					} else {
-						System.out.println("\n------Connection is Not Established------");
-						System.out.print("\n------Press Y Then Enter Continue------  \n");
-						
+						myLogger.warning("Connection is not establish");
+						System.out.println("\n------Press Y Then Enter Continue------  \n");
 					}
 				} catch (SQLException e) {
+					myLogger.warning(e.getMessage());
 				}
 				scobj.next().charAt(0);
 				break;
@@ -46,8 +50,8 @@ public class ClinicManagementSystem {
 						doctor.doctor_pannel();
 						break admin;
 					} else {
-						System.out.println("\n------Connection is Not Established------");
-						System.out.print("\n------Press Y Then Enter Continue------\n");
+						myLogger.warning("\n------Connection is Not Established------");
+						System.out.println("\n------Press Y Then Enter Continue------  \n");
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -57,13 +61,14 @@ public class ClinicManagementSystem {
 				break;
 			}
 			case 3:
-				System.out.println("\n------Thank you!  Application has shut down Run Again ");
+				myLogger.info("\n------Thank you!  Application has shut down Run Again ");
 				System.exit(0);
 			default:
-				//throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
-				continue;	
+				// throw new IllegalArgumentException("Unexpected value: " + choice);
+				myLogger.warning("--- -Worng Choioce---- \n");
+				continue;
 			}
-	}}
+		}
+	}
 
 }

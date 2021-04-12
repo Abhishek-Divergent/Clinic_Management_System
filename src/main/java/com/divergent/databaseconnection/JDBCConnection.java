@@ -3,6 +3,7 @@ package com.divergent.databaseconnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 /**
  * {@link JDBCConnection} implement to {@link JDBCConnectionInterface}
@@ -12,6 +13,9 @@ import java.sql.SQLException;
  *
  */
 public class JDBCConnection implements JDBCConnectionInterface {
+
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem");
+	
 	private String name = "root";
 	private String password = "root";
 	private String url = "jdbc:mysql://localhost:3306/clinicmanagementsystem";
@@ -25,7 +29,8 @@ public class JDBCConnection implements JDBCConnectionInterface {
 		try {
 			return DriverManager.getConnection(url, name, password);
 		} catch (SQLException e) {
-		System.out.print("Connetion Faild Run Again");
+			myLogger.warning(e.getMessage());
+			myLogger.info("Connetion Faild Run Again");
 		}
 		return null;
 	}

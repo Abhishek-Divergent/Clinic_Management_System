@@ -2,6 +2,7 @@ package com.divergent.clinicmanagementsystem;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divegent.doa.AppoinmentDOA;
 import com.divergent.clinicmanagementsystem.dto.AppoinmentDto;
@@ -15,6 +16,7 @@ import com.divergent.databaseconnection.JDBCConnection;
  */
 public class Appoinment {
 
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem");
 	public Scanner scobj = new Scanner(System.in);
 
 	/**
@@ -22,36 +24,35 @@ public class Appoinment {
 	 */
 
 	public void appoinmentPanel() {
-
+		myLogger.info("\n************************Appoinment CRUD************************\n");
 		p_panel: while (true) {
-
-			System.out.println("\n************************Appoinment CRUD************************\n");
 			System.out.println("1: Appoinment Create");
 			System.out.println("2: Appoinment Read");
-//		    System.out.println("3:LabTest Update\n");
-			System.out.println("4: Appoinment Delete");
-			System.out.println("5: Exit \n");
+			System.out.println("3: Appoinment Delete");
+			System.out.println("4: Exit \n");
 			System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
-
+				myLogger.info("Appoinment Create");
 				appoinmentCreate();
 				break;
 			case 2:
+				myLogger.info("Appoinment Read");
 				appoinmentRead();
 				break;
+
 			case 3:
-				// labTestUpdate();
-				break;
-			case 4:
+				myLogger.info("Appoinment Delete");
+
 				appoinmentDelete();
 				break;
-			case 5:
+			case 4:
 				break p_panel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning(("--- -Worng Choioce---- \n"));
+
 				continue;
 			}
 
@@ -69,15 +70,18 @@ public class Appoinment {
 			System.out.printf(
 					"appoinment_id        patient_id         doc_id        patient_name        doc_name        problem        date         time\n");
 			for (AppoinmentDto appoinmentDto : list) {
-				System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ", appoinmentDto.getAppoinmentid(),
-						appoinmentDto.getPatientid(), appoinmentDto.getDocid(), appoinmentDto.getDocname(),
-						appoinmentDto.getPatientname(), appoinmentDto.getProblem(), appoinmentDto.getDocid(),
-						appoinmentDto.getTime());
+				System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ",
+						appoinmentDto.getAppoinmentid(), appoinmentDto.getPatientid(), appoinmentDto.getDocid(),
+						appoinmentDto.getDocname(), appoinmentDto.getPatientname(), appoinmentDto.getProblem(),
+						appoinmentDto.getDocid(), appoinmentDto.getTime());
 				System.out.println("\n");
 			}
 
 		} catch (Exception e) {
-			System.err.println(e);
+			myLogger.warning(e.getMessage());
+			myLogger.info(e.toString());
+
+			// System.err.println(e);
 		}
 
 	}
@@ -93,10 +97,13 @@ public class Appoinment {
 			System.out.print("\n----Enter Appoinment ID  To Delete Drug --");
 			int a = scobj.nextInt();
 			appoinmentDOA.delete(a);
-			System.out.println("\n----Appoinment Delete----\n");
+			myLogger.info("\n----Appoinment Delete----\n");
+
+			// System.out.println("\n----Appoinment Delete----\n");
 		} catch (Exception e) {
-			System.err.println(e);
-			System.out.println("\n---- Appoinment Not Delete----\n");
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n---- Appoinment Not Delete----\n");
+			// System.out.println("\n---- Appoinment Not Delete----\n");
 		}
 
 	}
@@ -138,10 +145,12 @@ public class Appoinment {
 		AppoinmentDOA Adoa = new AppoinmentDOA(new JDBCConnection());
 		try {
 			Adoa.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
-			System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has  Inserted-------");
+
+			// System.out.println("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
-			System.err.println(e);
-			System.out.println("\n-------Value Has NOT Inserted-------");
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n-------Value Has NOT Inserted-------");
 		}
 
 	}

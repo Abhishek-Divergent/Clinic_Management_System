@@ -2,12 +2,15 @@ package com.divergent.clinicmanagementsystem;
 
 import java.util.Scanner;
 
+import java.util.logging.Logger;
+
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
 import java.sql.*;
 
 public class Admin {
 
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem");
 	JDBCConnectionInterface connectionInterface;
 
 	public Admin(JDBCConnectionInterface connectionInterface) {
@@ -27,29 +30,29 @@ public class Admin {
 	 * 
 	 * @return
 	 */
-	public boolean admin_Login()throws SQLException{
+	public boolean admin_Login() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rst = null;
-		System.out.println("************************ADMIN PANEL************************\n");
-		System.out.print("\nEnter Admin User Name  ");
-		String	admin_username = scobj.nextLine().trim();
-		System.out.print("\nEnter Admin Password   ");
+		myLogger.info("\n************************ADMIN  LogIn PANEL************************\n");
+		System.out.println("\nEnter Admin User Name  ");
+		String admin_username = scobj.nextLine().trim();
+		System.out.println("\nEnter Admin Password   ");
 		String admin_password = scobj.nextLine().trim();
-			connection = connectionInterface.connection();
-			if(connection!=null) {
+		connection = connectionInterface.connection();
+		if (connection != null) {
 			statement = connection.createStatement();
 			rst = statement.executeQuery("select *from admin where adminid='" + admin_username + "' and adminpassword='"
 					+ admin_password + "'");
 			if (rst.next() == true) {
-				System.out.println("\n----SUCCESSFULLY LOGIN----\n");
+				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
 				return true;
 			} else {
-				System.out.println("\n----Try Again----\n");
+				myLogger.warning("\n----Try Again UNSUCCESSFULLY LOGIN ---\n");
 				return false;
 			}
 		} else {
-			System.out.println("Connection is Null ");
+			myLogger.warning("Connection is Null ");
 		}
 		return false;
 	}
@@ -60,35 +63,42 @@ public class Admin {
 	 * @return
 	 */
 	public boolean admin_pannel() {
+		myLogger.info("************************ADMIN Opreation PANEL************************\n");
 		adminpanel: while (true) {
-			System.out.println("************************ADMIN PANEL************************\n");
 			System.out.println("1. CRUD Patient " + "\n2. CRUD Doctor" + "\n3. CRUD Drugs " + "\n4. CRUD Lab Test"
 					+ "\n5. Book appointment for a patient by selecting Patient, " + "\n6. Doctor and Data/time"
 					+ "\n7. Exits\n");
+			System.out.println();
 			System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1: {
+				myLogger.info("Patient Crud Operation");
 				patientCrud.patientPanel();
 				break;
 			}
 			case 2:
+				myLogger.info("Doctor Crud Operation");
 				crudDoctor.DoctorPanel();
 				break;
 			case 3:
+				myLogger.info("Drugs Crud Operation");
 				drugsCrud.DrugsPanel();
 				break;
 			case 4:
+				myLogger.info("Labtest Crud Operation");
 				labTestCrud.labTestPanel();
 				break;
 			case 5:
+				myLogger.info("Appointment Operation");
+				
 				appoinment.appoinmentPanel();
 				break;
 			case 7:
 				break adminpanel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}

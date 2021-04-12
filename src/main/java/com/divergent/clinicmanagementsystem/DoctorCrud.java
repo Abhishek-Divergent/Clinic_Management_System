@@ -3,17 +3,19 @@ package com.divergent.clinicmanagementsystem;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divegent.doa.DoctorCrudDOA;
 import com.divergent.clinicmanagementsystem.dto.DoctorDto;
 import com.divergent.databaseconnection.JDBCConnection;
 
 public class DoctorCrud {
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem");
 	public Scanner scobj = new Scanner(System.in);
 
 	public void DoctorPanel() {
 		p_panel: while (true) {
-			System.out.println("\n************************Doctor CRUD************************\n");
+			myLogger.info("\n************************Doctor CRUD************************\n");
 			System.out.println("1. Doctor Create ");
 			System.out.println("2. Doctor Read ");
 			System.out.println("3. Doctor Update ");
@@ -23,22 +25,27 @@ public class DoctorCrud {
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
+				myLogger.info("Create A doctor");
 				doctorCreate();
 				break;
 			case 2:
+				myLogger.info("Read A Doctor");
 				doctorRead();
 				break;
 			case 3:
+				myLogger.info("Update A doctor");
 				doctorUpdate();
 				break;
 			case 4:
+				myLogger.info("Delete A doctor");
 				doctorDelete();
 				break;
 			case 5:
 				break p_panel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.info("--- -Worng Choioce---- \n");
+				// System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
@@ -50,10 +57,12 @@ public class DoctorCrud {
 			System.out.print("\n----Enter Doctor ID  To Delete Doctor --");
 			int a = scobj.nextInt();
 			doa.delete(a);
-			System.out.print("\n----Doctor  Deleted --");
+			myLogger.info("\n----Doctor  Deleted --");
+			// System.out.print("\n----Doctor Deleted --");
 		} catch (SQLException e) {
-			System.err.println(e);
-			System.out.print("\n----Doctor Not Deleted --");
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n----Doctor Not Deleted --");
+			// System.out.print("\n----Doctor Not Deleted --");
 		}
 	}
 
@@ -83,10 +92,11 @@ public class DoctorCrud {
 		try {
 			DoctorCrudDOA doa = new DoctorCrudDOA(new JDBCConnection());
 			doa.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality, doc_fees);
-			System.out.println("\n-------Value  Updated-------");
-		} catch (SQLException e) {
-			System.out.println("\n-------Value Not Updated-------");
+			myLogger.info("\n-------Value  Updated-------");
 
+		} catch (SQLException e) {
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n-------Value Not Updated-------");
 		}
 	}
 
@@ -103,7 +113,8 @@ public class DoctorCrud {
 				System.out.println("\n");
 			}
 		} catch (SQLException e) {
-			System.out.println(e);
+			myLogger.warning(e.getMessage());
+			// System.out.println(e);
 		}
 
 	}
@@ -137,10 +148,11 @@ public class DoctorCrud {
 		DoctorCrudDOA doa = new DoctorCrudDOA(new JDBCConnection());
 		try {
 			doa.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality, doc_fees);
-			System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has Inserted-------");
+
 		} catch (SQLException e) {
-			System.err.println(e);
-			System.out.println("\n-------Value Has  Not Inserted-------");
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n-------Value Has Inserted-------");
 		}
 	}
 

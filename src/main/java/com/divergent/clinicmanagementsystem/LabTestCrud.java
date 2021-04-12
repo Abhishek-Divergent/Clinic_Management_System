@@ -2,18 +2,24 @@ package com.divergent.clinicmanagementsystem;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divegent.doa.LabTestCrudDOA;
 import com.divergent.clinicmanagementsystem.dto.LabTestDto;
 import com.divergent.databaseconnection.JDBCConnection;
 
 public class LabTestCrud {
+	private static final Logger myLogger = Logger
+			.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
 	public Scanner scobj = new Scanner(System.in);
 
 	public void labTestPanel() {
 
 		p_panel: while (true) {
-			System.out.println("\n************************LabTest CRUD************************\n");
+			myLogger.info("\n************************LabTest CRUD************************\n");
+
+			// System.out.println("\n************************LabTest
+			// CRUD************************\n");
 			System.out.println("1:LabTest Create ");
 			System.out.println("2:LabTest Read ");
 			System.out.println("3:LabTest Update  ");
@@ -23,27 +29,33 @@ public class LabTestCrud {
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
+				myLogger.info("Lab Test Create");
 				labTestCreate();
 				break;
 			case 2:
+				myLogger.info(" Lab Test Read" + "");
 				labTestRead();
 				break;
 			case 3:
+				myLogger.info("Lab Test Update");
 				labTestUpdate();
 				break;
 			case 4:
+				myLogger.info("Lab Test Delete");
 				labTestDelete();
 				break;
 			case 5:
 				break p_panel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning("--- -Worng Choioce---- \n");
+				// System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
 
 	}
+
 	private void labTestUpdate() {
 		LabTestCrudDOA doa = new LabTestCrudDOA(new JDBCConnection());
 		labTestRead();
@@ -60,8 +72,11 @@ public class LabTestCrud {
 		labtest_price = scobj.nextInt();
 		try {
 			doa.update(rowid, labtest_name, labtest_price);
-			System.out.println("\n-------Value Has Updated-------");
+
+			myLogger.info("\n-------Value Has Updated-------");
+			// System.out.println("\n-------Value Has Updated-------");
 		} catch (Exception e) {
+			myLogger.warning(e.getMessage());
 			// TODO: handle exception
 		}
 
@@ -78,7 +93,8 @@ public class LabTestCrud {
 				System.out.println("\n");
 			}
 		} catch (Exception e) {
-		System.err.println(e);
+			myLogger.warning(e.getMessage());
+			// System.err.println(e);
 		}
 
 	}
@@ -98,9 +114,12 @@ public class LabTestCrud {
 		labtest_price = scobj.nextInt();
 		try {
 			doa.create(labtest_id, labtest_name, labtest_price);
-			System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has Inserted-------");
+			// System.out.println("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
-			System.out.println("\n-------Value Has Not Inserted-------");
+			myLogger.warning(e.getMessage());
+			myLogger.warning("\n-------Value Has Not Inserted-------");
+			/// System.out.println("\n-------Value Has Not Inserted-------");
 		}
 
 	}
@@ -112,9 +131,12 @@ public class LabTestCrud {
 
 		try {
 			doa.delete(a);
-			System.out.println("\n----Lab Test Delete----\n");
+			myLogger.info("\n----Lab Test Delete----\n");
+			// System.out.println("\n----Lab Test Delete----\n");
 		} catch (Exception e) {
-			System.out.println("\n---- LabTest Not Delete----\n");
+			myLogger.warning(e.getMessage());
+			myLogger.warning("\n---- LabTest Not Delete----\n");
+			// System.out.println("\n---- LabTest Not Delete----\n");
 		}
 
 	}

@@ -3,18 +3,24 @@ package com.divergent.clinicmanagementsystem;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divegent.doa.DrugCrudDOA;
 import com.divergent.clinicmanagementsystem.dto.DrugsDto;
 import com.divergent.databaseconnection.JDBCConnection;
 
 public class DrugsCrud {
+	private static final Logger myLogger = Logger
+			.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
 	public Scanner scobj = new Scanner(System.in);
 
 	public void DrugsPanel() {
 
 		p_panel: while (true) {
-			System.out.println("\n************************Drugs CRUD************************\n");
+			myLogger.info("\n************************Drugs CRUD************************\n");
+
+			// System.out.println("\n************************Drugs
+			// CRUD************************\n");
 			System.out.println("1: Drugs Create");
 			System.out.println("2: Drugs Read");
 			System.out.println("3: Drugs Update");
@@ -24,22 +30,27 @@ public class DrugsCrud {
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
+				myLogger.info(" Drugd Create:");
 				DrugsCreate();
 				break;
 			case 2:
+				myLogger.info(" Drugd Read:");
 				DrugsRead();
 				break;
 			case 3:
+				myLogger.info(" Drugd Update:");
 				DrugsUpdate();
 				break;
 			case 4:
+				myLogger.info(" Drugd Delete:");
 				DrugsDelete();
 				break;
 			case 5:
 				break p_panel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning("--- -Worng Choioce---- \n");
+				//System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
@@ -61,9 +72,13 @@ public class DrugsCrud {
 		Drugs_description = scobj.nextLine().trim();
 		try {
 			doa.update(rowid, Drugs_name, Drugs_description);
-			System.out.println("\n-------Value Has Updated-------");
+			
+			myLogger.info("\n-------Value Has Updated-------");
+			//System.out.println("\n-------Value Has Updated-------");
 		} catch (Exception e) {
-			System.out.println("\n-------Value Has Not Updated-------");
+			   myLogger.warning(e.getMessage());
+			myLogger.info("\n-------Value Has Updated-------");
+			//System.out.println("\n-------Value Has Not Updated-------");
 		}
 	}
 
@@ -78,7 +93,8 @@ public class DrugsCrud {
 				System.out.println("");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+	        myLogger.warning(e.getMessage());
+			//e.printStackTrace();
 		}
 
 	}
@@ -100,9 +116,11 @@ public class DrugsCrud {
 		DrugCrudDOA doa = new DrugCrudDOA(new JDBCConnection());
 		try {
 			doa.create(Drugs_id, Drugs_name, Drugs_description);
-			System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has Updated-------");
+			//System.out.println("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
-			System.out.println("\n-------Value Has Not Inserted-------");
+			myLogger.warning(e.getMessage());
+			myLogger.info("\n-------Value Has Not  Updated-------");
 		}
 	}
 
@@ -112,10 +130,12 @@ public class DrugsCrud {
 			System.out.print("\n----Enter Drug ID  To Delete Drug --");
 			int a = scobj.nextInt();
 			doa.delete(a);
-			System.out.println("\n---- Drug Delete----\n");
+			myLogger.info("\n---- Drug Delete----\n");
+			//System.out.println("\n---- Drug Delete----\n");
 		} catch (Exception e) {
 			// System.err.println(e);
-			System.out.println("\n---- Drug Not Delete----\n");
+			myLogger.info("\n---- Drug Not Delete----\n");
+			//System.out.println("\n---- Drug Not Delete----\n");
 		}
 
 	}

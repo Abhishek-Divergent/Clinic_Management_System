@@ -3,18 +3,24 @@ package com.divergent.clinicmanagementsystem;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divegent.doa.PatientCrudDOA;
 import com.divergent.clinicmanagementsystem.dto.PatientDto;
 import com.divergent.databaseconnection.JDBCConnection;
 
 public class PatientCrud {
+	private static final Logger myLogger = Logger
+			.getLogger("com.divergent.clinicmanagementsystem.ClinicManagementSystem");
 	public Scanner scobj = new Scanner(System.in);
 
 	public void patientPanel() {
 
 		p_panel: while (true) {
-			System.out.println("\n************************Patient CRUD************************\n");
+			myLogger.info("\n************************Patient CRUD************************\n");
+
+			// System.out.println("\n************************Patient
+			// CRUD************************\n");
 			System.out.println("1. Patient Create");
 			System.out.println("2. Patient Read");
 			System.out.println("3. Patient Update");
@@ -24,22 +30,27 @@ public class PatientCrud {
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
+				myLogger.info("Patient Create");
 				patientCreate();
 				break;
 			case 2:
+				myLogger.info("Patient Read");
 				patientRead();
 				break;
 			case 3:
+				myLogger.info("Patient Read");
 				patientUpdate();
 				break;
 			case 4:
+				myLogger.info("Patient Delete");
 				patientDelete();
 				break;
 			case 5:
 				break p_panel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning("--- -Worng Choioce---- \n");
+				// System.out.println("--- -Worng Choioce---- \n");
 				continue;
 			}
 		}
@@ -53,7 +64,8 @@ public class PatientCrud {
 			pdoa.delete(a);
 			System.out.println("\n-------Patient--------");
 		} catch (Exception e) {
-			System.err.println(e);
+			myLogger.warning(e.getMessage());
+			// System.err.println(e);
 		}
 
 	}
@@ -84,10 +96,14 @@ public class PatientCrud {
 			System.out.print("\nEnter Patient Contact  --");
 			p_contact = scobj.nextLine().trim();
 			pdoa.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			System.out.println("\n-------Value Has Updated-------");
+			myLogger.info("\n-------Value Has Updated-------");
+			// System.out.println("\n-------Value Has Updated-------");
 		} catch (Exception e) {
-			System.err.println(e);
-			System.out.println("\n-------Value NOT Updated-------");
+
+			myLogger.warning(e.getMessage());
+			myLogger.warning("\n-------Value NOT Updated-------");
+//			System.err.println(e);
+//			System.out.println("\n-------Value NOT Updated-------");
 		}
 
 	}
@@ -106,7 +122,8 @@ public class PatientCrud {
 			}
 
 		} catch (Exception e) {
-			System.err.println(e);
+			myLogger.warning(e.getMessage());
+			// System.err.println(e);
 		}
 	}
 
@@ -137,10 +154,15 @@ public class PatientCrud {
 		PatientCrudDOA pdoa = new PatientCrudDOA(new JDBCConnection());
 		try {
 			pdoa.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has Inserted-------");
+			// System.out.println("\n-------Value Has Inserted-------");
 		} catch (SQLException e) {
-			System.err.println(e);
-			System.out.println("\n-------Value Has  Not Inserted-------");
+
+			myLogger.warning(e.getMessage());
+			myLogger.warning("\n-------Value NOT Insert-------");
+
+//			System.err.println(e);
+//			System.out.println("\n-------Value Has  Not Inserted-------");
 		}
 
 	}

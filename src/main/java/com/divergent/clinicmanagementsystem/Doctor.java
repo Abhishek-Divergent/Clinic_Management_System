@@ -6,9 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import java.util.logging.Logger;
+
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
 public class Doctor {
+	private static final Logger myLogger = Logger.getLogger("com.divergent.clinicmanagementsystem");
+
 	String doctortempusername;
 	public Scanner scobj = new Scanner(System.in);
 	JDBCConnectionInterface connectionInterface;
@@ -19,60 +23,67 @@ public class Doctor {
 	 * @param connectionInterface
 	 */
 	public Doctor(JDBCConnectionInterface connectionInterface) {
-			this.connectionInterface = connectionInterface;
+		this.connectionInterface = connectionInterface;
 	}
 
-	public boolean doctor_Login()throws SQLException {
+	public boolean doctor_Login() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rst = null;
 		String doctor_username;
 		String doctor_password;
-		System.out.println("\n************************DOCTOR PANEL************************\n");
+		myLogger.info("\n************************DOCTOR LOGIN PANEL************************\n");
 		System.out.print("\nEnter Doctor User Name  ");
-		;
 		doctor_username = scobj.nextLine().trim();
 		System.out.print("\nEnter Doctor Password   ");
 		doctor_password = scobj.nextLine().trim();
-			connection = connectionInterface.connection();
-			if(connection!=null) {
+		connection = connectionInterface.connection();
+		if (connection != null) {
 			statement = connection.createStatement();
-            rst = statement.executeQuery("select *from doctor where doc_username='" + doctor_username
+			rst = statement.executeQuery("select *from doctor where doc_username='" + doctor_username
 					+ "' and doc_password='" + doctor_password + "'");
 
 			if (rst.next() == true) {
-				System.out.println("\n----SUCCESSFULLY LOGIN----\n");
+				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
+				// System.out.println("\n----SUCCESSFULLY LOGIN----\n");
 				doctortempusername = doctor_username;
 				return true;
 
 			} else {
-				System.out.println("\n----Try Again----\n");
+				myLogger.info("\n----Try Again----\n");
+				// System.out.println("\n----Try Again----\n");
 				return false;
-			}}else {
-				System.out.println("Connection is Null ");
 			}
+		} else {
+			myLogger.warning("Connection is Null ");
+		}
 		return false;
 	}
 
 	public void doctor_pannel() {
+		myLogger.info("Panel for doctor to select  option");
 		doctorpanel: while (true) {
 
-			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
-					+ "3. Check Patient History and His Prescription\n" + "4. Exit\n");
-			System.out.print("\nEnter Choice The Option----  ");
+//			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
+//					+ "3. Check Patient History and His Prescription\n" + "4. Exit\n");
+			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n" + "3. Exit\n");
+		System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
+				myLogger.info("Patient list");
 				patientList();
 				break;
 			case 2:
+				myLogger.info("Patient prescription");
 				addPrescription();
 				break;
-			case 4:
+			case 3:
+				
 				break doctorpanel;
 			default:
 				// throw new IllegalArgumentException("Unexpected value: " + choice);
-				System.out.println("--- -Worng Choioce---- \n");
+				myLogger.warning("--- -Worng Choioce---- \n");
 				continue;
 			}
 
@@ -106,9 +117,11 @@ public class Doctor {
 			statement = connection.createStatement();
 			statement.executeUpdate("insert into  priscription  values(" + priscription_id + "," + doc_id + "," + p_id
 					+ ",'" + priscription + "','" + note + "')");
-			System.out.println("\n-------Value Has Inserted-------");
+			// System.out.println("\n-------Value Has Inserted-------");
+			myLogger.info("\n-------Value Has Inserted-------");
 		} catch (Exception e) {
-			System.err.println(e);
+			myLogger.warning(e.getMessage());
+			// System.err.println(e);
 		}
 	}
 
@@ -126,6 +139,7 @@ public class Doctor {
 				tempid = Integer.parseInt(resultSet.getString(1));
 			}
 			resultSet = statement.executeQuery("SELECT * FROM  appoinment where doc_id=" + tempid + "");
+			myLogger.info("\n- -------- Patient Appoinment List--------\n ");
 			System.out.print("\n- -------- Patient Appoinment List--------\n ");
 			System.out.printf(
 					"appoinment_id \t patient_id \t doc_id \t   doc_name \t patient_name\t \t problem \t  date\t  time");
@@ -136,7 +150,8 @@ public class Doctor {
 				System.out.println("\n");
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			//System.err.println(e);
+		   myLogger.warning(e.getMessage());
 		}
 	}
 }
