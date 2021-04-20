@@ -15,12 +15,13 @@ import org.slf4j.LoggerFactory;
  */
 public class ClinicManagementSystem {
 	private static final Logger myLogger = LoggerFactory.getLogger(ClinicManagementSystem.class.getName());
+
 	public static void main(String[] args) {
-		myLogger.info("Clinic Mangement Start ");
+		myLogger.info(" Clinic Mangement Start: ");
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
 		Menu menu = (Menu) context.getBean("menuid");
 		menu.showMenu();
+
 	}
 }
-

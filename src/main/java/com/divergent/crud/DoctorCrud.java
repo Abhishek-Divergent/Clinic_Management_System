@@ -12,7 +12,7 @@ public class DoctorCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(DoctorCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
 	private DoctorCrudDOA doa;
-	
+
 	public void setDoa(DoctorCrudDOA doa) {
 		this.doa = doa;
 	}
@@ -57,16 +57,19 @@ public class DoctorCrud {
 
 	private void doctorDelete() {
 		try {
-		
+
 			System.out.print("\n----Enter Doctor ID  To Delete Doctor --");
 			int a = scobj.nextInt();
-			doa.delete(a);
-			myLogger.info("\n----Doctor  Deleted --");
+			int i = doa.delete(a);
+			if (i == 1) {
+				myLogger.info("\n----Doctor  Deleted --");
+			} else {
+				myLogger.info("\n----Doctor Not Deleted --");
+			}
 
 		} catch (SQLException e) {
-			myLogger.error(null);
+			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.info("\n----Doctor Not Deleted --");
 
 		}
 	}
@@ -95,30 +98,38 @@ public class DoctorCrud {
 		System.out.print("\nEnter Doctor fees  --");
 		doc_fees = scobj.nextInt();
 		try {
-		
-			doa.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality, doc_fees);
-			myLogger.info("\n-------Value  Updated-------");
+
+			int i = doa.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality, doc_fees);
+			if (i == 1) {
+				myLogger.info("\n-------Value  Updated-------");
+			} else {
+				myLogger.info("\n-------Value Not Updated-------");
+			}
 
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());
-			myLogger.info("\n-------Value Not Updated-------");
+			myLogger.error(e.getMessage());
 		}
 	}
 
 	private void doctorRead() {
 		try {
-			List<DoctorDto> dtos = doa.read();
-			System.out.printf(
-					"doc_id          doc_username \t       doc_password \t   doc_name \t        doc_contact \t doc_speciality  doc_fees\n");
-			for (DoctorDto doctorDto : dtos) {
-				System.out.printf("%d %30s %15s  %20s %20s  %15s %10d ", doctorDto.getId(), doctorDto.getUsername(),
-						doctorDto.getName(), doctorDto.getPassword(), doctorDto.getContact(), doctorDto.getSpeciality(),
-						doctorDto.getFees());
-				System.out.println("\n");
+			List<DoctorDto> list = doa.read();
+			if (list != null) {
+				System.out.printf(
+						"doc_id          doc_username \t       doc_password \t   doc_name \t        doc_contact \t doc_speciality  doc_fees\n");
+				for (DoctorDto doctorDto : list) {
+					System.out.printf("%d %30s %15s  %20s %20s  %15s %10d \n", doctorDto.getId(),
+							doctorDto.getUsername(), doctorDto.getName(), doctorDto.getPassword(),
+							doctorDto.getContact(), doctorDto.getSpeciality(), doctorDto.getFees());
+				}
+			} else {
+				myLogger.info("List is Null");
 			}
+
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage()); 
+			myLogger.error(e.getMessage());
 		}
 
 	}
@@ -150,12 +161,15 @@ public class DoctorCrud {
 		doc_fees = scobj.nextInt();
 
 		try {
-			doa.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality, doc_fees);
-			myLogger.info("\n-------Value Has Inserted-------");
+			int i = doa.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality, doc_fees);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Inserted-------");
+			} else {
+				myLogger.info("\n-------Value Has Inserted-------");
 
+			}
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());
-			myLogger.info("\n-------Value Has Inserted-------");
 		}
 	}
 

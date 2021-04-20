@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.LabTestCrudDOA;
@@ -24,7 +26,9 @@ class LabTestCrudDOATest {
 	
 	@BeforeEach
 	private void TestSetup() throws SQLException {
-		databaseManager = new H2DatabaseManager();
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"testconfig.xml");
+		databaseManager = (H2DatabaseManager) context.getBean("h2databaseid");
 		connection = databaseManager.connection();
 		statement = connection.createStatement();
 		statement.execute("drop table if exists labtest");
@@ -38,26 +42,34 @@ class LabTestCrudDOATest {
 	
 	@Test
 	void testDelete() throws SQLException {
-		 LabTestCrudDOA crudDOA= new LabTestCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"testconfig.xml");
+		 LabTestCrudDOA crudDOA= (LabTestCrudDOA) context.getBean("labtestdoaid");
 		  assertEquals(1,crudDOA.delete(1001));
 	}
 
 	@Test
 	void testCreate() throws SQLException {
-		 LabTestCrudDOA crudDOA= new LabTestCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"testconfig.xml");
+		 LabTestCrudDOA crudDOA= (LabTestCrudDOA) context.getBean("labtestdoaid");
 		  assertEquals(1,crudDOA.create(1002,"sugar test" , 20015));
 	}
 
 	@Test
 	void testRead() throws SQLException {
-		 LabTestCrudDOA crudDOA= new LabTestCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"testconfig.xml");
+		 LabTestCrudDOA crudDOA= (LabTestCrudDOA) context.getBean("labtestdoaid");
 		 List<LabTestDto> list =crudDOA.read();
 		 assertFalse(list.isEmpty());
  	}
 
 	@Test
 	void testUpdate() throws SQLException {
-		 LabTestCrudDOA crudDOA= new LabTestCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"testconfig.xml");
+		 LabTestCrudDOA crudDOA= (LabTestCrudDOA) context.getBean("labtestdoaid");
 		  assertEquals(1,crudDOA.update(1001,"test karo", 1000));
 	}
 

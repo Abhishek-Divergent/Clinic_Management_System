@@ -17,7 +17,10 @@ public class LabTestCrudDOA {
 
 	private JDBCConnectionInterface connectionInterface;
 
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
+	
+
+	public LabTestCrudDOA(JDBCConnectionInterface connectionInterface) {
+		super();
 		this.connectionInterface = connectionInterface;
 	}
 

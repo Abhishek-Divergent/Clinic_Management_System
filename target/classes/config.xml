@@ -15,9 +15,8 @@
 
 		<!--********************* Menu Beans******************* -->
 		<bean id="menuid" class="com.divergent.crud.Menu" >
-		<property name="adminobj" ref="adminid" />
-		<property name="doctor" ref="doctorid" />
-		
+		<constructor-arg  ref="adminid" />
+		<constructor-arg  ref="doctorid" />
 		</bean>
 	
 	
@@ -25,7 +24,7 @@
 	
 		<!-- ************************ADMIN Beans********************* -->		
 		<bean id="adminid" class="com.divergent.crud.Admin" >
-		<property name="connectionInterface" ref="jdbcid"></property>
+		<constructor-arg ref="jdbcid"></constructor-arg>
 		<property name="patientCrud"  ref="patientcrudid"></property>
 		<property name="crudDoctor"   ref="doctorcrudid"></property>
 		<property name="labTestCrud"  ref="labtestcrudid"></property>
@@ -35,21 +34,18 @@
         <!-- ************************Doctor Beans********************* -->		
 		
         <bean id="doctorid" class="com.divergent.crud.Doctor">
-        	<property name="connectionInterface" ref="jdbcid"></property>
+        	<constructor-arg ref="jdbcid"></constructor-arg>
         </bean>
-        
-        
-	    	
-	    	
+     
 		<!-- *************************Patient CRUD********************** -->		
 		<bean id="patientcrudid" class=" com.divergent.crud.PatientCrud">
-	      <property name="pdoa" ref="patientdoaid"></property>
+		 <constructor-arg ref="patientdoaid" /> 
 		</bean>
 		
 
 		<!-- *************************Patient DOA*********************** -->
 		<bean id="patientdoaid" class="com.divergent.doa.PatientCrudDOA">
-			<property name="connectionInterface" ref="jdbcid"></property>
+			<constructor-arg ref="jdbcid"></constructor-arg>
 		</bean>
 
 
@@ -63,7 +59,7 @@
 		</bean>
 	    <!-- *************************Doctor  DOA*********************** -->
 	     <bean id="doctordaoid" class="com.divergent.doa.DoctorCrudDOA">
-	     <property name="connectionInterface" ref="jdbcid"></property>
+	       <constructor-arg ref="jdbcid"></constructor-arg>
 	     </bean>
 
 		<!-- **************************Doctor DTO ************************-->
@@ -79,7 +75,7 @@
 		
 			<!-- ************************** Appoinment DOA ************************-->
 			<bean id="appoinmentdoaid" class="com.divergent.doa.AppoinmentDOA">
-               <property name="connectionInterface" ref="jdbcid"></property>
+              <constructor-arg ref="jdbcid"></constructor-arg>
              </bean>
 		
 		  <!-- ************************** Appoinment DTO ************************-->
@@ -95,7 +91,7 @@
 		</bean>
 		<!-- ************************** Labtest DOA************************-->
 		<bean id="labtestdoaid" class=" com.divergent.doa.LabTestCrudDOA">
-		  <property name="connectionInterface" ref="jdbcid"></property>
+		  <constructor-arg ref="jdbcid"></constructor-arg>
 		</bean>
 		<!-- ************************** Labtest  DTO************************-->
 		<bean id="labtestdtoid" class=" com.divergent.dto.LabTestDto"></bean>
@@ -108,19 +104,13 @@
 		</bean>
 		 <!-- ************************** Drugs  DOA ************************-->
 		
-	    <bean id="drugsdoaid" class=" com.divergent.doa.DrugsCrudDOA">
-		  <property name="connectionInterface" ref="jdbcid"></property>
+	    <bean id="drugsdoaid" class=" com.divergent.doa.DrugCrudDOA">
+		 <constructor-arg ref="jdbcid"></constructor-arg>
 		</bean>
 		 <!-- ************************** Drugs  DTO ************************-->
 		
-		<bean id="drugsdtoid" class=" com.divergent.dto.DrugsDto">
-		
-		</bean>
-		
-		
-		
-		
-		
+		<bean id="drugsdtoid" class=" com.divergent.dto.DrugsDto" />
+
 
 	   <!-- JDBC DataBase Connection -->
 	   <bean id="jdbcid" class="com.divergent.databaseconnection.JDBCConnection" />

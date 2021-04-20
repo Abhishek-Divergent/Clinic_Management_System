@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
 import java.sql.*;
-
+/**
+ * this class is ADMIN class  will perform login operation and ADMIN panel
+ * @author JAI MAHAKAL
+ *
+ */
 public class Admin {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Admin.class.getName());
@@ -20,13 +24,11 @@ public class Admin {
 	private Appoinment appoinment;
 	private DrugsCrud drugsCrud;
 
-	public Admin() {
+	public Admin(JDBCConnectionInterface connectionInterface) {
 		super();
-	}
-
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
 		this.connectionInterface = connectionInterface;
 	}
+
 
 	public void setPatientCrud(PatientCrud patientCrud) {
 		this.patientCrud = patientCrud;
@@ -72,7 +74,7 @@ public class Admin {
 				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
 				return true;
 			} else {
-				myLogger.warn("\n----Try Again UNSUCCESSFULLY LOGIN ---\n");
+				myLogger.info("\n----Try Again UNSUCCESSFULLY LOGIN ---\n");
 				return false;
 			}
 		} else {
@@ -82,7 +84,7 @@ public class Admin {
 	}
 
 	/**
-	 * this method take input to perform admin operation
+	 * admin panel method   will perfrom all crud operation and will give option to choose
 	 * 
 	 * @return
 	 */
@@ -91,8 +93,7 @@ public class Admin {
 		adminpanel: while (true) {
 			System.out.println("1. CRUD Patient " + "\n2. CRUD Doctor" + "\n3. CRUD Drugs " + "\n4. CRUD Lab Test"
 					+ "\n5. Book appointment for a patient by selecting Patient, " + "\n6. Doctor and Data/time"
-					+ "\n7. Exits\n");
-			System.out.println();
+					+ "\n7. Exits\n\n");
 			System.out.print("\nEnter Choice The Option----  ");
 			int choice = scobj.nextInt();
 			switch (choice) {

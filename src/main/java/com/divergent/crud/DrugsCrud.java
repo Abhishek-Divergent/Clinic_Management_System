@@ -113,9 +113,9 @@ public class DrugsCrud {
 
 		System.out.print("\nEnter  Drugs_description  --");
 		Drugs_description = scobj.nextLine().trim();
-	;
 		try {
 			doa.create(Drugs_id, Drugs_name, Drugs_description);
+			
 			myLogger.info("\n-------Value Has Updated-------");
 
 		} catch (Exception e) {

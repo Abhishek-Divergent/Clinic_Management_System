@@ -71,14 +71,18 @@ public class Appoinment {
 	private void appoinmentRead() {
 		try {
 			List<AppoinmentDto> list = appoinmentDOA.read();
-			System.out.printf(
-					"appoinment_id        patient_id         doc_id        patient_name        doc_name        problem        date         time\n");
-			for (AppoinmentDto appoinmentDto : list) {
-				System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ",
-						appoinmentDto.getAppoinmentid(), appoinmentDto.getPatientid(), appoinmentDto.getDocid(),
-						appoinmentDto.getDocname(), appoinmentDto.getPatientname(), appoinmentDto.getProblem(),
-						appoinmentDto.getDate(), appoinmentDto.getTime());
-				System.out.println("\n");
+			if (list != null) {
+				System.out.printf(
+						"appoinment_id        patient_id         doc_id        patient_name        doc_name        problem        date         time\n");
+				for (AppoinmentDto appoinmentDto : list) {
+					System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ",
+							appoinmentDto.getAppoinmentid(), appoinmentDto.getPatientid(), appoinmentDto.getDocid(),
+							appoinmentDto.getDocname(), appoinmentDto.getPatientname(), appoinmentDto.getProblem(),
+							appoinmentDto.getDate(), appoinmentDto.getTime());
+					System.out.println("\n");
+				}
+			} else {
+				myLogger.info("List is null");
 			}
 
 		} catch (Exception e) {
@@ -99,12 +103,15 @@ public class Appoinment {
 		try {
 			System.out.print("\n----Enter Appoinment ID  To Delete Drug --");
 			int a = scobj.nextInt();
-			appoinmentDOA.delete(a);
-			myLogger.info("\n----Appoinment Delete----\n");
+			int i = appoinmentDOA.delete(a);
+			if (i == 1) {
+				myLogger.info("\n----Appoinment Delete----\n");
+			} else {
+				myLogger.info("\n---- Appoinment Not Delete----\n");
+			}
 		} catch (Exception e) {
 			myLogger.warn(e.getMessage());
 			myLogger.error(e.getMessage());
-			myLogger.info("\n---- Appoinment Not Delete----\n");
 		}
 
 	}
@@ -144,13 +151,16 @@ public class Appoinment {
 		System.out.print("\nEnter  Time  --");
 		String time = scobj.nextLine();
 		try {
-			appoinmentDOA.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
-			myLogger.info("\n-------Value Has  Inserted-------");
+			int i = appoinmentDOA.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Inserted-------");
+			} else {
+				myLogger.info("\n-------Value Has Not Inserted-------");
 
+			}
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());
 			myLogger.error(e.getMessage());
-			myLogger.info("\n-------Value Has NOT Inserted-------");
 		}
 
 	}

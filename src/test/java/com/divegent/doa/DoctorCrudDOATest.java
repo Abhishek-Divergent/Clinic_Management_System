@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.DoctorCrudDOA;
@@ -22,7 +24,8 @@ class DoctorCrudDOATest {
 	@BeforeEach
 	void setup() throws Exception {
 
-		databaseManager = new H2DatabaseManager();
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		databaseManager = (H2DatabaseManager) context.getBean("h2databaseid");
 		connection = databaseManager.connection();
 		statement = connection.createStatement();
 		statement.execute("drop table if exists doctor");
@@ -38,28 +41,31 @@ class DoctorCrudDOATest {
 
 	@Test
 	public void read() throws SQLException {
-		DoctorCrudDOA crudDOA = new DoctorCrudDOA(databaseManager);
-		
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
 			List<DoctorDto> list=crudDOA.read();
         assertEquals(false,list.isEmpty());			
 	}
 	@Test
 	public void create() throws SQLException {
-		DoctorCrudDOA crudDOA = new DoctorCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
 		assertEquals(1,crudDOA.create(102, "kallu", "123456789", "jayant patel","4561230", "dentist", 1000));			
 
 	}
 	
 	@Test
 	public void update() throws SQLException {
-		DoctorCrudDOA crudDOA = new DoctorCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
 		assertEquals(1,crudDOA.update(101, "kallu", "123456789", "jayant  patel","4561230", "dentist", 2000));			
 
 	}
 	
 	@Test
 	public  void delete() throws SQLException {
-		DoctorCrudDOA crudDOA = new DoctorCrudDOA(databaseManager);
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
 		assertEquals(1,crudDOA.delete(101));			
 
 	}

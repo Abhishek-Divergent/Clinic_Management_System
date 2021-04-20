@@ -17,13 +17,9 @@ public class Doctor {
 	private Scanner scobj = new Scanner(System.in);
 	private String doctortempusername;
 
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
-		this.connectionInterface = connectionInterface;
-	}
-
-	public Doctor() {
+	public Doctor(JDBCConnectionInterface connectionInterface) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.connectionInterface = connectionInterface;
 	}
 
 	public boolean doctor_Login() throws SQLException {
@@ -142,10 +138,9 @@ public class Doctor {
 			System.out.printf(
 					"appoinment_id \t patient_id \t doc_id \t   doc_name \t patient_name\t \t problem \t  date\t  time");
 			while (resultSet.next()) {
-				System.out.printf("\n  %s \t \t %s \t \t %s \t \t %s \t %s \t \t  %s  \t  %s \t   %s ",
+				System.out.printf("\n  %s \t \t %s \t \t %s \t \t %s \t %s \t \t  %s  \t  %s \t   %s  \n",
 						resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
 						resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8));
-				System.out.println("\n");
 			}
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());

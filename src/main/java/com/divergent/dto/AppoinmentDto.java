@@ -1,8 +1,8 @@
 package com.divergent.dto;
 
 public class AppoinmentDto {
-	String appoinmentid, patientid, docid;
-	String docname, patientname, problem, date, time;
+	private String appoinmentid, patientid, docid;
+	private String docname, patientname, problem, date, time;
 
 	public String getAppoinmentid() {
 		return appoinmentid;

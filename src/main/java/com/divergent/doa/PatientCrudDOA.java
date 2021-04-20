@@ -7,23 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 import com.divergent.dto.PatientDto;
-
+/**
+ * this patient DAO will contain  method which will perfrom all CRUD operation
+ * @author JAI MAHAKAL
+ *
+ */
 public class PatientCrudDOA {
-	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-	
-
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
+	public PatientCrudDOA(JDBCConnectionInterface connectionInterface) {
+		super();
 		this.connectionInterface = connectionInterface;
 	}
-
-	
 
 	public int create(int p_id, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
 			String p_address) throws SQLException {
@@ -31,9 +30,8 @@ public class PatientCrudDOA {
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		int a = statement.executeUpdate("insert into patient values (" + p_id + ", '" + p_name + "'," + p_age + ", '"
+		return statement.executeUpdate("insert into patient values (" + p_id + ", '" + p_name + "'," + p_age + ", '"
 				+ p_gender + "', '" + p_contact + "', " + p_weight + ", '" + p_address + "')");
-		return a;
 	}
 
 	public int delete(int a) throws SQLException {
@@ -41,8 +39,8 @@ public class PatientCrudDOA {
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		int b = statement.executeUpdate("delete from patient where p_id=" + a + "");
-		return b;
+		return statement.executeUpdate("delete from patient where p_id=" + a + "");
+		
 	}
 
 	public List<PatientDto> read() throws SQLException {
@@ -77,10 +75,9 @@ public class PatientCrudDOA {
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		int b = statement.executeUpdate("update patient set p_name='" + p_name + "', p_age=" + p_age + ",p_gender ='"
+		return  statement.executeUpdate("update patient set p_name='" + p_name + "', p_age=" + p_age + ",p_gender ='"
 				+ p_gender + "',p_contact='" + p_contact + "',p_weight=" + p_weight + ",p_address='" + p_address
 				+ "' where p_id=" + rowid);
-		return b;
 	}
 
 }

@@ -15,11 +15,8 @@ public class PatientCrud {
 	private static Scanner scobj = new Scanner(System.in);
 	private PatientCrudDOA pdoa;
 
-	public static void setScobj(Scanner scobj) {
-		PatientCrud.scobj = scobj;
-	}
- 
-	public void setPdoa(PatientCrudDOA pdoa) { 
+	public PatientCrud(PatientCrudDOA pdoa) {
+		super();
 		this.pdoa = pdoa;
 	}
 
@@ -61,10 +58,17 @@ public class PatientCrud {
 
 	private void patientDelete() {
 		try {
-			System.out.print("\n----Enter Patient ID  To Delete Patient --");
+			myLogger.info("\n----Enter Patient ID  To Delete Patient --");
 			int a = scobj.nextInt();
-			pdoa.delete(a);
-			System.out.println("\n-------Patient--------");
+			int i = pdoa.delete(a);
+			if (i == 1) {
+				System.out.println("\n-------Patient Deleted--------");
+
+			} else {
+				System.out.println("\n-------Patient Not Deleted--------");
+
+			}
+
 		} catch (SQLException e) {
 			myLogger.warn(e.getMessage());
 			myLogger.error(e.getMessage());
@@ -76,8 +80,9 @@ public class PatientCrud {
 	private void patientUpdate() {
 		try {
 			patientRead();
-			System.out.print("\n----Enter Patient ID Which You Want to UPDATE --");
+			myLogger.info("\n----Enter Patient ID Which You Want to UPDATE --");
 			int rowid = scobj.nextInt();
+			scobj.nextLine();
 			int p_age;
 			int p_weight;
 			String p_name;
@@ -97,12 +102,17 @@ public class PatientCrud {
 			p_address = scobj.nextLine().trim();
 			System.out.print("\nEnter Patient Contact  --");
 			p_contact = scobj.nextLine().trim();
-			pdoa.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			myLogger.info("\n-------Value Has Updated-------");
+			int i = pdoa.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Updated-------");
+			} else {
+				myLogger.warn("\n-------Value NOT Updated-------");
+			}
+
 		} catch (SQLException e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.warn("\n-------Value NOT Updated-------");
+
 		}
 
 	}
@@ -110,13 +120,16 @@ public class PatientCrud {
 	private void patientRead() {
 		try {
 			List<PatientDto> list = pdoa.read();
-			System.out.printf(
-					"patient Id \t Patient Name \t Patient Age \t Patient Gender \t Patient Contact \t Patient Weight \t Patient Address \n\n");
-			for (PatientDto patientDto : list) {
-				System.out.printf("%d %25s %10d %15s %30s  %15d %30s ", patientDto.getId(), patientDto.getName(),
-						patientDto.getAge(), patientDto.getGender(), patientDto.getContact(), patientDto.getWeight(),
-						patientDto.getAddress());
-				System.out.println("\n");
+			if (list != null) {
+				System.out.printf(
+						"patient Id \t Patient Name \t Patient Age \t Patient Gender \t Patient Contact \t Patient Weight \t Patient Address \n\n");
+				for (PatientDto patientDto : list) {
+					System.out.printf("%d %25s %10d %15s %30s  %15d %30s \n", patientDto.getId(), patientDto.getName(),
+							patientDto.getAge(), patientDto.getGender(), patientDto.getContact(),
+							patientDto.getWeight(), patientDto.getAddress());
+				}
+			} else {
+				myLogger.info("List is Null");
 			}
 
 		} catch (SQLException e) {
@@ -150,12 +163,16 @@ public class PatientCrud {
 		System.out.print("\nEnter Patient Contact  --");
 		p_contact = scobj.nextLine().trim();
 		try {
-			pdoa.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			myLogger.info("\n-------Value Has Inserted-------");
+			int i = pdoa.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Inserted-------");
+			} else {
+				myLogger.warn("\n-------Value NOT Insert-------");
+			}
 		} catch (SQLException e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.warn("\n-------Value NOT Insert-------");
+
 		}
 
 	}

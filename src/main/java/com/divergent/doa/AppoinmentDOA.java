@@ -17,7 +17,8 @@ public class AppoinmentDOA {
 
 	private JDBCConnectionInterface connectionInterface;
 
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
+	public AppoinmentDOA(JDBCConnectionInterface connectionInterface) {
+		super();
 		this.connectionInterface = connectionInterface;
 	}
 

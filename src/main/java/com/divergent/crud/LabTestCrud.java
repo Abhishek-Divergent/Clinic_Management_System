@@ -76,10 +76,12 @@ public class LabTestCrud {
 		System.out.print("\nEnter LabTest Price  --");
 		labtest_price = scobj.nextInt();
 		try {
-			doa.update(rowid, labtest_name, labtest_price);
-
-			myLogger.info("\n-------Value Has Updated-------");
-
+			int i = doa.update(rowid, labtest_name, labtest_price);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Updated-------");
+			} else {
+				myLogger.info("\n-------Value Has Not Updated-------");
+			}
 		} catch (Exception e) {
 			myLogger.warn(e.getMessage());
 			myLogger.error(e.getMessage());
@@ -118,14 +120,15 @@ public class LabTestCrud {
 		System.out.print("\nEnter LabTest Price  --");
 		labtest_price = scobj.nextInt();
 		try {
-			doa.create(labtest_id, labtest_name, labtest_price);
-			myLogger.info("\n-------Value Has Inserted-------");
-
+			int i = doa.create(labtest_id, labtest_name, labtest_price);
+			if (i == 1) {
+				myLogger.info("\n-------Value Has Inserted-------");
+			} else {
+				myLogger.info("\n-------Value Has Not Inserted-------");
+			}
 		} catch (Exception e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.info("\n-------Value Has Not Inserted-------");
-
 		}
 
 	}
@@ -135,13 +138,18 @@ public class LabTestCrud {
 		int a = scobj.nextInt();
 
 		try {
-			doa.delete(a);
-			myLogger.info("\n----Lab Test Delete----\n");
+			int i = doa.delete(a);
+			if (i == 1) {
+				myLogger.info("\n----Lab Test Delete----\n");
+
+			} else {
+				myLogger.info("\n----Lab Test  Not Delete----\n");
+
+			}
 
 		} catch (Exception e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.warn("\n---- LabTest Not Delete----\n");
 
 		}
 

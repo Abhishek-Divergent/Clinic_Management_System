@@ -17,7 +17,9 @@ public class DrugCrudDOA {
 	JDBCConnectionInterface connectionInterface;
 
 	
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
+ 
+	public DrugCrudDOA(JDBCConnectionInterface connectionInterface) {
+		super();
 		this.connectionInterface = connectionInterface;
 	}
 

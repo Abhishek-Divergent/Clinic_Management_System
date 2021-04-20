@@ -18,13 +18,16 @@ import com.divergent.dto.DoctorDto;
  * This is Doctor DOA class here We will perform all crud operation
  */
 public class DoctorCrudDOA {
-	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-	
-
-	public void setConnectionInterface(JDBCConnectionInterface connectionInterface) {
+	public DoctorCrudDOA(JDBCConnectionInterface connectionInterface) {
+		super();
 		this.connectionInterface = connectionInterface;
 	}
+
+	
+	
+
+
 	public List<DoctorDto> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
@@ -56,9 +59,8 @@ public class DoctorCrudDOA {
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		int a=statement.executeUpdate("insert into doctor values (" + doc_id + ", '" + doc_username + "','" + doc_password
+		return statement.executeUpdate("insert into doctor values (" + doc_id + ", '" + doc_username + "','" + doc_password
 				+ "', '" + doc_name + "', '" + doc_contact + "','" + doc_speciality + "'," + doc_fees + ")");
-        return a;
 	}
 
 	public int update(int rowid,  String doc_username, String doc_password,String doc_name, String doc_contact,
@@ -66,13 +68,11 @@ public class DoctorCrudDOA {
 		Connection connection = null;
 		Statement statement = null;
 
-		connection = connectionInterface.connection();
+		connection = connectionInterface.connection(); 
 		statement = connection.createStatement();
-	int a= statement.executeUpdate("update doctor set doc_name = '" + doc_name + "' ,doc_username = '" + doc_username
+		return  statement.executeUpdate("update doctor set doc_name = '" + doc_name + "' ,doc_username = '" + doc_username
 				+ "', doc_password = '" + doc_password + "', doc_contact = '" + doc_contact + "', doc_speciality = '"
 				+ doc_speciality + "',doc_fees = " + doc_fees + " where doc_id = " + rowid);
-		return  a;
-	
 	}
 
 	public int delete(int a) throws SQLException {
@@ -80,7 +80,6 @@ public class DoctorCrudDOA {
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
-		int b=statement.executeUpdate("delete from doctor where doc_id=" + a + "");
-	return b;
+		return statement.executeUpdate("delete from doctor where doc_id=" + a + "");
 	}
 }
