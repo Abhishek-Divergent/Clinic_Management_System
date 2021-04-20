@@ -9,8 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.divergent.clinicmanagementsystem.dto.DoctorDto;
 import com.divergent.databaseconnection.H2DatabaseManager;
+import com.divergent.doa.DoctorCrudDOA;
+import com.divergent.dto.DoctorDto;
 
 class DoctorCrudDOATest {
 

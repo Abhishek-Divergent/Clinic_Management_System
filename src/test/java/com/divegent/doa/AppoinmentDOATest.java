@@ -9,19 +9,27 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.divergent.clinicmanagementsystem.dto.AppoinmentDto;
 import com.divergent.databaseconnection.H2DatabaseManager;
+import com.divergent.doa.AppoinmentDOA;
+import com.divergent.dto.AppoinmentDto;
 
 class AppoinmentDOATest {
-	Connection connection=null;
-    H2DatabaseManager databaseManager=null;
+	private Connection connection=null;
+    private H2DatabaseManager databaseManager=null;
+    private AppoinmentDOA appoinmentDOA;
+   
+
 	Statement statement;
 	
-	@BeforeEach
+	@BeforeEach 
 	private void TestSetup() throws SQLException {
-		databaseManager = new H2DatabaseManager();
-		connection = databaseManager.connection();
+		 ApplicationContext applicationContext= new ClassPathXmlApplicationContext("testconfig.xml");
+		 appoinmentDOA=(AppoinmentDOA) applicationContext.getBean("appoinmentdoaid");
+
+		
 		statement = connection.createStatement();
 		statement.execute("drop table if exists appoinment");
 		System.out.println("Table Deleted");
@@ -42,20 +50,23 @@ class AppoinmentDOATest {
 
 	@Test
 	void testCreate() throws SQLException {
-		AppoinmentDOA appoinmentDOA=new AppoinmentDOA(databaseManager);
+		 ApplicationContext applicationContext= new ClassPathXmlApplicationContext("testconfig.xml");
+		 appoinmentDOA=(AppoinmentDOA) applicationContext.getBean("appoinmentdoaid");
 		assertEquals(1, appoinmentDOA.create(1, 1003, 105,"pappu", "ramu", "prem", "2021-03-25", "10:20:20"));
 	}
 
 	@Test
 	void testDelete() throws SQLException {
-	AppoinmentDOA appoinmentDOA=new AppoinmentDOA(databaseManager);
+		 ApplicationContext applicationContext= new ClassPathXmlApplicationContext("testconfig.xml");
+		 appoinmentDOA=(AppoinmentDOA) applicationContext.getBean("appoinmentdoaid");
 	assertEquals(1, appoinmentDOA.delete(2));
 	
 	}
 
 	@Test
 	void testRead() throws SQLException {
-		AppoinmentDOA appoinmentDOA=new AppoinmentDOA(databaseManager);
+		 ApplicationContext applicationContext= new ClassPathXmlApplicationContext("testconfig.xml");
+		 appoinmentDOA=(AppoinmentDOA) applicationContext.getBean("appoinmentdoaid");
 		List<AppoinmentDto> list=appoinmentDOA.read();
 		assertFalse(list.isEmpty());
 	}

@@ -11,8 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.divergent.clinicmanagementsystem.dto.DrugsDto;
 import com.divergent.databaseconnection.H2DatabaseManager;
+import com.divergent.doa.DrugCrudDOA;
+import com.divergent.dto.DrugsDto;
 
 class DrugCrudDOATest {
 	Connection connection=null;

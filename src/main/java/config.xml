@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		 http://www.springframework.org/schema/context
+		 http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+		 http://www.springframework.org/schema/tx 
+		 http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		 http://www.springframework.org/schema/aop 
+		 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+		<!--********************* Menu Beans******************* -->
+		<bean id="menuid" class="com.divergent.crud.Menu" >
+		<property name="adminobj" ref="adminid" />
+		<property name="doctor" ref="doctorid" />
+		
+		</bean>
+	
+	
+	
+	
+		<!-- ************************ADMIN Beans********************* -->		
+		<bean id="adminid" class="com.divergent.crud.Admin" >
+		<property name="connectionInterface" ref="jdbcid"></property>
+		<property name="patientCrud"  ref="patientcrudid"></property>
+		<property name="crudDoctor"   ref="doctorcrudid"></property>
+		<property name="labTestCrud"  ref="labtestcrudid"></property>
+		<property name="appoinment"   ref="appoinmentid"></property>
+		<property name="drugsCrud"    ref="drugscrudid"></property>
+        </bean>
+        <!-- ************************Doctor Beans********************* -->		
+		
+        <bean id="doctorid" class="com.divergent.crud.Doctor">
+        	<property name="connectionInterface" ref="jdbcid"></property>
+        </bean>
+        
+        
+	    	
+	    	
+		<!-- *************************Patient CRUD********************** -->		
+		<bean id="patientcrudid" class=" com.divergent.crud.PatientCrud">
+	      <property name="pdoa" ref="patientdoaid"></property>
+		</bean>
+		
+
+		<!-- *************************Patient DOA*********************** -->
+		<bean id="patientdoaid" class="com.divergent.doa.PatientCrudDOA">
+			<property name="connectionInterface" ref="jdbcid"></property>
+		</bean>
+
+
+		<!-- **************************Patient DTO ************************-->
+		<bean id="patientdtoid" class="com.divergent.dto.PatientDto"  scope="prototype" />
+	
+		
+		<!-- *******************************Doctor CRUD ******************-->
+		<bean id="doctorcrudid" class=" com.divergent.crud.DoctorCrud">
+		 <property name="doa" ref="doctordaoid"></property>
+		</bean>
+	    <!-- *************************Doctor  DOA*********************** -->
+	     <bean id="doctordaoid" class="com.divergent.doa.DoctorCrudDOA">
+	     <property name="connectionInterface" ref="jdbcid"></property>
+	     </bean>
+
+		<!-- **************************Doctor DTO ************************-->
+		<bean id="doctordtoid" class="com.divergent.dto.DoctorDto"  scope="prototype" />
+	
+	
+		<!-- ************************** Appoinment CRUD ************************-->
+			<bean id="appoinmentid" class="com.divergent.crud.Appoinment">
+			
+			<property name="appoinmentDOA" ref="appoinmentdoaid" ></property>	
+			 </bean>
+		
+		
+			<!-- ************************** Appoinment DOA ************************-->
+			<bean id="appoinmentdoaid" class="com.divergent.doa.AppoinmentDOA">
+               <property name="connectionInterface" ref="jdbcid"></property>
+             </bean>
+		
+		  <!-- ************************** Appoinment DTO ************************-->
+			<bean id="appoinmentdtoid" class="com.divergent.dto.AppoinmentDto">
+              
+            </bean>
+		
+		
+		<!-- ************************** Labtest  CRUD ************************-->
+		<bean id="labtestcrudid" class=" com.divergent.crud.LabTestCrud">
+		<property name="doa" ref="labtestdoaid">  </property>
+		
+		</bean>
+		<!-- ************************** Labtest DOA************************-->
+		<bean id="labtestdoaid" class=" com.divergent.doa.LabTestCrudDOA">
+		  <property name="connectionInterface" ref="jdbcid"></property>
+		</bean>
+		<!-- ************************** Labtest  DTO************************-->
+		<bean id="labtestdtoid" class=" com.divergent.dto.LabTestDto"></bean>
+		
+		
+         <!-- ************************** Drugs  CRUD ************************-->
+		
+		<bean id="drugscrudid" class=" com.divergent.crud.DrugsCrud">
+		 <property name="doa" ref="drugsdoaid"></property>
+		</bean>
+		 <!-- ************************** Drugs  DOA ************************-->
+		
+	    <bean id="drugsdoaid" class=" com.divergent.doa.DrugsCrudDOA">
+		  <property name="connectionInterface" ref="jdbcid"></property>
+		</bean>
+		 <!-- ************************** Drugs  DTO ************************-->
+		
+		<bean id="drugsdtoid" class=" com.divergent.dto.DrugsDto">
+		
+		</bean>
+		
+		
+		
+		
+		
+
+	   <!-- JDBC DataBase Connection -->
+	   <bean id="jdbcid" class="com.divergent.databaseconnection.JDBCConnection" />
+	   
+	 
+
+</beans>
