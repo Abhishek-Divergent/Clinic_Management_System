@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,5 +166,16 @@ public class Appoinment {
 		}
 
 	}
+	@PostConstruct
+	public void start() {
+		myLogger.debug(" Admin Crud Opeation Panel Start : ");
+		myLogger.info(" Admin Crud Opeation Panel Start : ");
+		
+	}
 
+	@PreDestroy
+	public void end() {
+		myLogger.debug(" Admin Crud Opeation Panel End : ");
+		myLogger.info(" Admin Crud Opeation Panel End : ");
+	}
 }

@@ -2,6 +2,7 @@ package com.divergent.clinicmanagementsystem;
 
 import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.crud.Menu;
@@ -22,6 +23,7 @@ public class ClinicManagementSystem {
 		ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
 		Menu menu = (Menu) context.getBean("menuid");
 		menu.showMenu();
+		((AbstractApplicationContext) context).registerShutdownHook();
 
 	}
 }

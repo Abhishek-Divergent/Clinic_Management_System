@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +140,19 @@ public class DrugsCrud {
 
 		}
 
+	}
+	@PostConstruct
+	public void start() {
+		myLogger.debug(" Drugs Crud Opeation Panel Start : ");
+		myLogger.info("  Drugs Crud Opeation Panel Start : ");
+		
+	}
+
+	@PreDestroy
+	public void end() {
+		myLogger.debug(" Drugs Crud Opeation Panel End : ");
+		myLogger.info("Drugs Crud Opeation Panel End : ");
+		
 	}
 
 }

@@ -3,6 +3,9 @@ package com.divergent.crud;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,6 @@ public class Menu {
 	@Autowired
 	private Doctor doctor;
 
-	
 	/**
 	 * showMenu Method Will show Admin login and Doctor login to choose
 	 */
@@ -80,4 +82,17 @@ public class Menu {
 		}
 	}
 
+	@PostConstruct
+	public void start() {
+		myLogger.debug(" Clinic Managenment System Menu Start : ");
+		myLogger.info("  Clinic Managenment System Menu Start : ");
+
+	}
+
+	@PreDestroy
+	public void end() {
+		myLogger.debug(" Clinic Managenment System Menu End : ");
+		myLogger.info(" Clinic Managenment System Menu End : ");
+
+	}
 }

@@ -2,6 +2,9 @@ package com.divergent.crud;
 
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,5 +113,16 @@ public class Admin {
 		}
 		return true;
 	}
+	@PostConstruct
+	public void start() {
+		myLogger.debug(" Admin Panel  :");
+		myLogger.info(" Admin Panel  :");
+		
+	}
 
+	@PreDestroy
+	public void end() {
+		myLogger.debug(" Admin Panel : ");
+		myLogger.info(" Admin Panel : ");
+	}
 }

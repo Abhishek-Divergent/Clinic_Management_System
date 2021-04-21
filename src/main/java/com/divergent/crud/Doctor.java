@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,4 +148,17 @@ public class Doctor {
 			myLogger.error(e.getMessage());
 		}
 	}
+	@PostConstruct
+	public void start() {
+		myLogger.debug(" Doctor Panel Start : ");
+		myLogger.info(" Doctor Panel Start : ");
+		
+	}
+
+	@PreDestroy
+	public void end() {
+		myLogger.debug(" Doctor Panel End : ");
+		myLogger.info(" Doctor Panel End : ");
+	}
+	
 }
