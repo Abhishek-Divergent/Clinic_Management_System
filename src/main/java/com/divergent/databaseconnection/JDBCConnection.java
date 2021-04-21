@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.divergent.crud.Menu;
-
 /**
  * {@link JDBCConnection} implement to {@link JDBCConnectionInterface}
  * JDBCConnection Class Establish the connection to Date Base

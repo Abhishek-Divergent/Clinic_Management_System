@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.doa.DrugCrudDOA;
 import com.divergent.dto.DrugsDto;
@@ -13,11 +14,8 @@ import com.divergent.dto.DrugsDto;
 public class DrugsCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(DrugsCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
-	private DrugCrudDOA doa;
-
-	public void setDoa(DrugCrudDOA doa) {
-		this.doa = doa;
-	}
+	@Autowired
+	private DrugCrudDOA drugCrudDOA;
 
 	public void DrugsPanel() {
 
@@ -70,7 +68,7 @@ public class DrugsCrud {
 		System.out.print("\nEnter  Drugs Description  --");
 		Drugs_description = scobj.nextLine().trim();
 		try {
-			doa.update(rowid, Drugs_name, Drugs_description);
+			drugCrudDOA.update(rowid, Drugs_name, Drugs_description);
 
 			myLogger.info("\n-------Value Has Updated-------");
 
@@ -83,7 +81,7 @@ public class DrugsCrud {
 
 	private void DrugsRead() {
 		try {
-			List<DrugsDto> drugsDtos = doa.read();
+			List<DrugsDto> drugsDtos = drugCrudDOA.read();
 			System.out.printf("DrugID \t DrugName \t DrugDiscription\n");
 			for (DrugsDto drugsDto : drugsDtos) {
 				System.out.printf("%10s\t|| %10s\t|| %10s ", drugsDto.getDrugsid(), drugsDto.getDrugsname(),
@@ -91,7 +89,7 @@ public class DrugsCrud {
 				System.out.println("");
 			}
 		} catch (SQLException e) {
-			
+
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
 
@@ -114,8 +112,8 @@ public class DrugsCrud {
 		System.out.print("\nEnter  Drugs_description  --");
 		Drugs_description = scobj.nextLine().trim();
 		try {
-			doa.create(Drugs_id, Drugs_name, Drugs_description);
-			
+			drugCrudDOA.create(Drugs_id, Drugs_name, Drugs_description);
+
 			myLogger.info("\n-------Value Has Updated-------");
 
 		} catch (Exception e) {
@@ -129,7 +127,7 @@ public class DrugsCrud {
 		try {
 			System.out.print("\n----Enter Drug ID  To Delete Drug --");
 			int a = scobj.nextInt();
-			doa.delete(a);
+			drugCrudDOA.delete(a);
 			myLogger.info("\n---- Drug Delete----\n");
 
 		} catch (Exception e) {

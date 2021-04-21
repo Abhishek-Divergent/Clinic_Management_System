@@ -14,7 +14,7 @@ public class H2DatabaseManager implements JDBCConnectionInterface {
 		try {
 			connection = DriverManager.getConnection(DB_URL,"sa",""	);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		return connection;
 	}

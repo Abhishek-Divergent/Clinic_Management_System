@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.doa.PatientCrudDOA;
 import com.divergent.dto.PatientDto;
@@ -13,13 +14,8 @@ import com.divergent.dto.PatientDto;
 public class PatientCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(PatientCrud.class.getName());
 	private static Scanner scobj = new Scanner(System.in);
-	private PatientCrudDOA pdoa;
-
-	public PatientCrud(PatientCrudDOA pdoa) {
-		super();
-		this.pdoa = pdoa;
-	}
-
+	@Autowired
+	private PatientCrudDOA patientCrudDOA;
 	public void patientPanel() {
 		p_panel: while (true) {
 			myLogger.info("\n************************Patient CRUD************************\n");
@@ -60,7 +56,7 @@ public class PatientCrud {
 		try {
 			myLogger.info("\n----Enter Patient ID  To Delete Patient --");
 			int a = scobj.nextInt();
-			int i = pdoa.delete(a);
+			int i = patientCrudDOA.delete(a);
 			if (i == 1) {
 				System.out.println("\n-------Patient Deleted--------");
 
@@ -102,7 +98,7 @@ public class PatientCrud {
 			p_address = scobj.nextLine().trim();
 			System.out.print("\nEnter Patient Contact  --");
 			p_contact = scobj.nextLine().trim();
-			int i = pdoa.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+			int i = patientCrudDOA.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
 			if (i == 1) {
 				myLogger.info("\n-------Value Has Updated-------");
 			} else {
@@ -119,7 +115,7 @@ public class PatientCrud {
 
 	private void patientRead() {
 		try {
-			List<PatientDto> list = pdoa.read();
+			List<PatientDto> list = patientCrudDOA.read();
 			if (list != null) {
 				System.out.printf(
 						"patient Id \t Patient Name \t Patient Age \t Patient Gender \t Patient Contact \t Patient Weight \t Patient Address \n\n");
@@ -163,7 +159,7 @@ public class PatientCrud {
 		System.out.print("\nEnter Patient Contact  --");
 		p_contact = scobj.nextLine().trim();
 		try {
-			int i = pdoa.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+			int i = patientCrudDOA.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
 			if (i == 1) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {

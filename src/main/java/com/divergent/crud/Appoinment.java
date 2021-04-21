@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.doa.AppoinmentDOA;
 import com.divergent.dto.AppoinmentDto;
@@ -20,12 +21,10 @@ public class Appoinment {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Appoinment.class.getName());
 	public Scanner scobj = new Scanner(System.in);
+	@Autowired
 	private AppoinmentDOA appoinmentDOA;
 
-	public void setAppoinmentDOA(AppoinmentDOA appoinmentDOA) {
-		this.appoinmentDOA = appoinmentDOA;
-	}
-
+	
 	/**
 	 * appointment panel will perform all operation create ,update, delete and read
 	 */

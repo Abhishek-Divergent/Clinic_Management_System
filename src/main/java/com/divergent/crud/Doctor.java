@@ -8,19 +8,17 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
 public class Doctor {
 	private static final Logger myLogger = LoggerFactory.getLogger(Doctor.class.getName());
+
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
 	private Scanner scobj = new Scanner(System.in);
 	private String doctortempusername;
-
-	public Doctor(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
 
 	public boolean doctor_Login() throws SQLException {
 		Connection connection = null;

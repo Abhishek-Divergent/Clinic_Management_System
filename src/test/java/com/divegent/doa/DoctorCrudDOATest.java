@@ -1,13 +1,16 @@
 package com.divegent.doa;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,7 +24,7 @@ class DoctorCrudDOATest {
 	H2DatabaseManager databaseManager = null;
 	Statement statement = null;
 
-	@BeforeEach
+	@Before
 	void setup() throws Exception {
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -18,12 +19,8 @@ import com.divergent.dto.PatientDto;
  *
  */
 public class PatientCrudDOA {
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-	public PatientCrudDOA(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
-
 	public int create(int p_id, String p_name, int p_age, String p_gender, String p_contact, int p_weight,
 			String p_address) throws SQLException {
 		Connection connection = null;
@@ -56,15 +53,15 @@ public class PatientCrudDOA {
 		while (resultSet.next()) {
 			@SuppressWarnings("resource")
 			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			PatientDto dto=(PatientDto) context.getBean("patientdtoid");
-			dto.setId(resultSet.getInt(1));
-			dto.setName(resultSet.getString(2));
-			dto.setAge(resultSet.getInt(3));
-			dto.setGender(resultSet.getString(4));
-			dto.setContact(resultSet.getString(5));
-			dto.setWeight(resultSet.getInt(6));
-			dto.setAddress(resultSet.getString(7));
-			list.add(dto);
+			PatientDto patientDto=(PatientDto) context.getBean("patientDto");
+			 patientDto.setId(resultSet.getInt(1));
+			 patientDto.setName(resultSet.getString(2));
+			 patientDto.setAge(resultSet.getInt(3));
+			 patientDto.setGender(resultSet.getString(4));
+			 patientDto.setContact(resultSet.getString(5));
+			 patientDto.setWeight(resultSet.getInt(6));
+			 patientDto.setAddress(resultSet.getString(7));
+			list.add(patientDto);
 		}
 		return list;
 	}

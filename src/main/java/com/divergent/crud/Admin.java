@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
@@ -17,38 +18,19 @@ public class Admin {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Admin.class.getName());
 	private Scanner scobj = new Scanner(System.in);
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
+	@Autowired
 	private PatientCrud patientCrud;
+	@Autowired
 	private DoctorCrud crudDoctor;
+	@Autowired
 	private LabTestCrud labTestCrud;
+	@Autowired
 	private Appoinment appoinment;
+	@Autowired
 	private DrugsCrud drugsCrud;
 
-	public Admin(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
-
-
-	public void setPatientCrud(PatientCrud patientCrud) {
-		this.patientCrud = patientCrud;
-	}
-
-	public void setCrudDoctor(DoctorCrud crudDoctor) {
-		this.crudDoctor = crudDoctor;
-	}
-
-	public void setLabTestCrud(LabTestCrud labTestCrud) {
-		this.labTestCrud = labTestCrud;
-	}
-
-	public void setAppoinment(Appoinment appoinment) {
-		this.appoinment = appoinment;
-	}
-
-	public void setDrugsCrud(DrugsCrud drugsCrud) {
-		this.drugsCrud = drugsCrud;
-	}
 
 	/**
 	 * this method will connect to the database to verify Admin method will verify

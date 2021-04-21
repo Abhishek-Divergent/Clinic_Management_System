@@ -18,16 +18,9 @@ import com.divergent.dto.DoctorDto;
  * This is Doctor DOA class here We will perform all crud operation
  */
 public class DoctorCrudDOA {
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-	public DoctorCrudDOA(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
-
 	
-	
-
-
 	public List<DoctorDto> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
@@ -40,7 +33,7 @@ public class DoctorCrudDOA {
 		while (resultSet.next()) {
 			@SuppressWarnings("resource")
 			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			DoctorDto doctorDto =(DoctorDto) context.getBean("doctordtoid");
+			DoctorDto doctorDto =(DoctorDto) context.getBean("doctorDto");
 			doctorDto.setId(resultSet.getInt(1));
 			doctorDto.setUsername(resultSet.getString(2));
 			doctorDto.setPassword(resultSet.getString(3));

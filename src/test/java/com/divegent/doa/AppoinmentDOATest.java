@@ -1,14 +1,17 @@
 package com.divegent.doa;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -18,15 +21,15 @@ import com.divergent.dto.AppoinmentDto;
 
 class AppoinmentDOATest {
 	Connection connection = null;
-	H2DatabaseManager databaseManager = null;
+	H2DatabaseManager h2DatabaseManager = null;
 	Statement statement;
 
-	@BeforeEach
+	@SuppressWarnings("resource")
+	@Before
 	private void TestSetup() throws SQLException {
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"testconfig.xml");
-		databaseManager = (H2DatabaseManager) context.getBean("h2databaseid");
-		connection = databaseManager.connection();
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+		h2DatabaseManager = (H2DatabaseManager) context.getBean("h2DatabaseManager");
+		connection = h2DatabaseManager.connection();
 		statement = connection.createStatement();
 		statement.execute("drop table if exists appoinment");
 		System.out.println("Table Deleted");
@@ -39,34 +42,36 @@ class AppoinmentDOATest {
 
 	}
 
+	@SuppressWarnings("resource")
 	@Test
 	void testCreate() throws SQLException {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"testconfig.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 
-		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentdoaid");
+		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentDOA");
 		assertEquals(1, appoinmentDOA.create(1, 1003, 105, "pappu", "ramu", "prem", "2021-03-25", "10:20:20"));
 	}
 
+	@SuppressWarnings("resource")
 	@Test
 	void testDelete() throws SQLException {
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"testconfig.xml");
 
-		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentdoaid");
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+
+		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentDOA");
 		assertEquals(1, appoinmentDOA.delete(2));
 
 	}
 
+	@SuppressWarnings("resource")
 	@Test
 	void testRead() throws SQLException {
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"testconfig.xml");
 
-		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentdoaid");
+		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
+
+		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentDOA");
 		List<AppoinmentDto> list = appoinmentDOA.read();
-		assertFalse(list.isEmpty()); 
+		assertFalse(list.isEmpty());
 	}
 
 }

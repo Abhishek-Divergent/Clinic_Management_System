@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,16 +15,8 @@ import com.divergent.databaseconnection.JDBCConnectionInterface;
 import com.divergent.dto.LabTestDto;
 
 public class LabTestCrudDOA {
-
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-
-	
-
-	public LabTestCrudDOA(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
-
 	public int delete(int a) throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
@@ -52,11 +45,11 @@ public class LabTestCrudDOA {
 		while (resultSet.next()) {
 			@SuppressWarnings("resource")
 			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			LabTestDto dto = (LabTestDto) context.getBean("labtestdtoid");
-			dto.setLabtestid(resultSet.getInt(1));
-			dto.setLabtest_name(resultSet.getString(2));
-			dto.setLabtest_price(resultSet.getInt(3));
-			list.add(dto);
+			LabTestDto labTestDto = (LabTestDto) context.getBean("labTestDto");
+			labTestDto.setLabtestid(resultSet.getInt(1));
+			labTestDto.setLabtest_name(resultSet.getString(2));
+			labTestDto.setLabtest_price(resultSet.getInt(3));
+			list.add(labTestDto);
 		}
 		return list;
 	}

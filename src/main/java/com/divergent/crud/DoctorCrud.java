@@ -5,17 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.divergent.doa.DoctorCrudDOA;
 import com.divergent.dto.DoctorDto;
 
 public class DoctorCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(DoctorCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
-	private DoctorCrudDOA doa;
-
-	public void setDoa(DoctorCrudDOA doa) {
-		this.doa = doa;
-	}
+	@Autowired
+	private DoctorCrudDOA doctorCrudDOA;
 
 	public void DoctorPanel() {
 		p_panel: while (true) {
@@ -60,7 +59,7 @@ public class DoctorCrud {
 
 			System.out.print("\n----Enter Doctor ID  To Delete Doctor --");
 			int a = scobj.nextInt();
-			int i = doa.delete(a);
+			int i = doctorCrudDOA.delete(a);
 			if (i == 1) {
 				myLogger.info("\n----Doctor  Deleted --");
 			} else {
@@ -99,7 +98,8 @@ public class DoctorCrud {
 		doc_fees = scobj.nextInt();
 		try {
 
-			int i = doa.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality, doc_fees);
+			int i = doctorCrudDOA.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality,
+					doc_fees);
 			if (i == 1) {
 				myLogger.info("\n-------Value  Updated-------");
 			} else {
@@ -114,7 +114,7 @@ public class DoctorCrud {
 
 	private void doctorRead() {
 		try {
-			List<DoctorDto> list = doa.read();
+			List<DoctorDto> list = doctorCrudDOA.read();
 			if (list != null) {
 				System.out.printf(
 						"doc_id          doc_username \t       doc_password \t   doc_name \t        doc_contact \t doc_speciality  doc_fees\n");
@@ -161,7 +161,8 @@ public class DoctorCrud {
 		doc_fees = scobj.nextInt();
 
 		try {
-			int i = doa.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality, doc_fees);
+			int i = doctorCrudDOA.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality,
+					doc_fees);
 			if (i == 1) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {

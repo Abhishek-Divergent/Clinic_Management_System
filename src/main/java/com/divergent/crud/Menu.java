@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * This is menu class this will contain Menu Option of this Application
@@ -15,15 +16,12 @@ import org.slf4j.LoggerFactory;
 public class Menu {
 	private static final Logger myLogger = LoggerFactory.getLogger(Menu.class.getName());
 	private static Scanner scobj = new Scanner(System.in);
-	private Admin adminobj;
+	@Autowired
+	private Admin admin;
+	@Autowired
 	private Doctor doctor;
 
-	public Menu(Admin adminobj, Doctor doctor) {
-		super();
-		this.adminobj = adminobj;
-		this.doctor = doctor;
-	}
-
+	
 	/**
 	 * showMenu Method Will show Admin login and Doctor login to choose
 	 */
@@ -38,8 +36,8 @@ public class Menu {
 			admin: switch (choice) {
 			case 1: {
 				try {
-					if (adminobj.admin_Login()) {
-						adminobj.admin_pannel();
+					if (admin.admin_Login()) {
+						admin.admin_pannel();
 						break admin;
 					} else {
 						myLogger.warn("Connection is not establish");

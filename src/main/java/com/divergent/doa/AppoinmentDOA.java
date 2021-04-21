@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,13 +15,8 @@ import com.divergent.databaseconnection.JDBCConnectionInterface;
 import com.divergent.dto.AppoinmentDto;
 
 public class AppoinmentDOA {
-
+	@Autowired
 	private JDBCConnectionInterface connectionInterface;
-
-	public AppoinmentDOA(JDBCConnectionInterface connectionInterface) {
-		super();
-		this.connectionInterface = connectionInterface;
-	}
 
 	public int create(int appoiment_id, int doc_id, int patient_id, String doc_name, String patient_name,
 			String problem, String date, String time) throws SQLException {
@@ -51,7 +47,7 @@ public class AppoinmentDOA {
 		while (resultSet.next()) {
 			@SuppressWarnings("resource")
 			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			AppoinmentDto appoinmentDto = (AppoinmentDto) context.getBean("appoinmentdtoid");
+			AppoinmentDto appoinmentDto = (AppoinmentDto) context.getBean("appoinmentDto");
 			appoinmentDto.setAppoinmentid(resultSet.getString(1));
 			appoinmentDto.setPatientid(resultSet.getString(2));
 			appoinmentDto.setDocid(resultSet.getString(3));

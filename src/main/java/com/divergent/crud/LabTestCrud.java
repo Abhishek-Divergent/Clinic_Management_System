@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.divergent.doa.LabTestCrudDOA;
 import com.divergent.dto.LabTestDto;
@@ -13,15 +14,8 @@ import com.divergent.dto.LabTestDto;
 public class LabTestCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(LabTestCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
-	private LabTestCrudDOA doa;
-
-	public void setScobj(Scanner scobj) {
-		this.scobj = scobj;
-	}
-
-	public void setDoa(LabTestCrudDOA doa) {
-		this.doa = doa;
-	}
+	@Autowired
+	private LabTestCrudDOA labTestCrudDOA;
 
 	public void labTestPanel() {
 
@@ -76,7 +70,7 @@ public class LabTestCrud {
 		System.out.print("\nEnter LabTest Price  --");
 		labtest_price = scobj.nextInt();
 		try {
-			int i = doa.update(rowid, labtest_name, labtest_price);
+			int i = labTestCrudDOA.update(rowid, labtest_name, labtest_price);
 			if (i == 1) {
 				myLogger.info("\n-------Value Has Updated-------");
 			} else {
@@ -92,7 +86,7 @@ public class LabTestCrud {
 
 	private void labTestRead() {
 		try {
-			List<LabTestDto> list = doa.read();
+			List<LabTestDto> list = labTestCrudDOA.read();
 			System.out.printf(" LabTest Id\t  LabTest Name \t LabTest price \n");
 			for (LabTestDto labTestDto : list) {
 				System.out.printf("%5s %20s %15s", labTestDto.getLabtestid(), labTestDto.getLabtest_name(),
@@ -120,7 +114,7 @@ public class LabTestCrud {
 		System.out.print("\nEnter LabTest Price  --");
 		labtest_price = scobj.nextInt();
 		try {
-			int i = doa.create(labtest_id, labtest_name, labtest_price);
+			int i = labTestCrudDOA.create(labtest_id, labtest_name, labtest_price);
 			if (i == 1) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {
@@ -138,7 +132,7 @@ public class LabTestCrud {
 		int a = scobj.nextInt();
 
 		try {
-			int i = doa.delete(a);
+			int i = labTestCrudDOA.delete(a);
 			if (i == 1) {
 				myLogger.info("\n----Lab Test Delete----\n");
 
