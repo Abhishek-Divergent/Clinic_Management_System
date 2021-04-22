@@ -2,6 +2,7 @@ package com.divergent.crud;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -10,10 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.divergent.doa.LabTestCrudDOA;
-import com.divergent.dto.LabTestDto;
 
+@Component
 public class LabTestCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(LabTestCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
@@ -89,11 +91,10 @@ public class LabTestCrud {
 
 	private void labTestRead() {
 		try {
-			List<LabTestDto> list = labTestCrudDOA.read();
+			List<Map<Integer, String>> list = labTestCrudDOA.read();
 			System.out.printf(" LabTest Id\t  LabTest Name \t LabTest price \n");
-			for (LabTestDto labTestDto : list) {
-				System.out.printf("%5s %20s %15s", labTestDto.getLabtestid(), labTestDto.getLabtest_name(),
-						labTestDto.getLabtest_price());
+			for (Map<Integer, String> map : list) {
+				System.out.printf("%5s %20s %15s", map.get(1), map.get(2), map.get(3));
 				System.out.println("\n");
 			}
 		} catch (SQLException e) {

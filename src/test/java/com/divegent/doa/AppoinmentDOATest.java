@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.AppoinmentDOA;
-import com.divergent.dto.AppoinmentDto;
 
 class AppoinmentDOATest {
 	Connection connection = null;
@@ -70,7 +70,7 @@ class AppoinmentDOATest {
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 
 		AppoinmentDOA appoinmentDOA = (AppoinmentDOA) context.getBean("appoinmentDOA");
-		List<AppoinmentDto> list = appoinmentDOA.read();
+		List<Map<Integer, String>> list = appoinmentDOA.read();
 		assertFalse(list.isEmpty());
 	}
 

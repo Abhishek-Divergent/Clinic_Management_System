@@ -8,6 +8,7 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
@@ -17,6 +18,7 @@ import java.sql.*;
  * @author JAI MAHAKAL
  *
  */
+@Component
 public class Admin {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Admin.class.getName());

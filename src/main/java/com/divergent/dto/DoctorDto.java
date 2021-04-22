@@ -1,5 +1,8 @@
 package com.divergent.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DoctorDto {
 	private String username, password, name, contact, speciality;
 	private int id, fees;

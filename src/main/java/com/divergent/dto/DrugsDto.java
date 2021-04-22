@@ -1,5 +1,8 @@
 package com.divergent.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DrugsDto {
 	private int drugsid;
 	private String drugsname, drugsdescription;

@@ -9,6 +9,7 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * This is menu class this will contain Menu Option of this Application
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author JAI MAHAKAL
  *
  */
+@Component
 public class Menu {
 	private static final Logger myLogger = LoggerFactory.getLogger(Menu.class.getName());
 	private static Scanner scobj = new Scanner(System.in);

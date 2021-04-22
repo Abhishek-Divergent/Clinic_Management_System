@@ -7,6 +7,7 @@ com\divergent\doa\LabTestCrudDOA.class
 com\divergent\crud\Menu.class
 com\divergent\crud\PatientCrud.class
 com\divergent\doa\DrugCrudDOA.class
+com\divergent\javaconfiguration\javaconfig.class
 com\divergent\crud\Doctor.class
 com\divergent\crud\LabTestCrud.class
 com\divergent\doa\AppoinmentDOA.class

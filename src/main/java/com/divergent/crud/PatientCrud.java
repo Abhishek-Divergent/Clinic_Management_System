@@ -2,6 +2,7 @@ package com.divergent.crud;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -10,15 +11,17 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.divergent.doa.PatientCrudDOA;
-import com.divergent.dto.PatientDto;
 
+@Component
 public class PatientCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(PatientCrud.class.getName());
 	private static Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private PatientCrudDOA patientCrudDOA;
+
 	public void patientPanel() {
 		p_panel: while (true) {
 			myLogger.info("\n************************Patient CRUD************************\n");
@@ -118,15 +121,16 @@ public class PatientCrud {
 
 	private void patientRead() {
 		try {
-			List<PatientDto> list = patientCrudDOA.read();
+			List<Map<Integer, String>> list = patientCrudDOA.read();
 			if (list != null) {
 				System.out.printf(
 						"patient Id \t Patient Name \t Patient Age \t Patient Gender \t Patient Contact \t Patient Weight \t Patient Address \n\n");
-				for (PatientDto patientDto : list) {
-					System.out.printf("%d %25s %10d %15s %30s  %15d %30s \n", patientDto.getId(), patientDto.getName(),
-							patientDto.getAge(), patientDto.getGender(), patientDto.getContact(),
-							patientDto.getWeight(), patientDto.getAddress());
+				for (Map<Integer, String> map : list) {
+
+					System.out.printf("%s %25s %10s %15s %30s  %15s %30s \n", map.get(1), map.get(2), map.get(3),
+							map.get(4), map.get(5), map.get(6), map.get(7));
 				}
+
 			} else {
 				myLogger.info("List is Null");
 			}
@@ -175,6 +179,7 @@ public class PatientCrud {
 		}
 
 	}
+
 	@PostConstruct
 	public void start() {
 		myLogger.debug(" Patient Crud  Opeation Panel Start : ");
@@ -189,4 +194,3 @@ public class PatientCrud {
 
 	}
 }
-

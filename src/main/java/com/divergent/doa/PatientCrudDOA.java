@@ -5,19 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
-import com.divergent.dto.PatientDto;
 /**
  * this patient DAO will contain  method which will perfrom all CRUD operation
  * @author JAI MAHAKAL
  *
  */
+@Repository
 public class PatientCrudDOA {
 	@Autowired
 	private JDBCConnectionInterface connectionInterface;
@@ -40,7 +41,7 @@ public class PatientCrudDOA {
 		
 	}
 
-	public List<PatientDto> read() throws SQLException {
+	public List<Map<Integer, String>> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -48,20 +49,18 @@ public class PatientCrudDOA {
 		statement = connection.createStatement();
 		resultSet = statement.executeQuery("select * from patient");
 
-		List<PatientDto> list = new ArrayList<>();
+		List<Map<Integer, String>> list = new ArrayList<>();
 
 		while (resultSet.next()) {
-			@SuppressWarnings("resource")
-			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			PatientDto patientDto=(PatientDto) context.getBean("patientDto");
-			 patientDto.setId(resultSet.getInt(1));
-			 patientDto.setName(resultSet.getString(2));
-			 patientDto.setAge(resultSet.getInt(3));
-			 patientDto.setGender(resultSet.getString(4));
-			 patientDto.setContact(resultSet.getString(5));
-			 patientDto.setWeight(resultSet.getInt(6));
-			 patientDto.setAddress(resultSet.getString(7));
-			list.add(patientDto);
+			Map<Integer, String> map = new HashMap<>();
+			map.put(1, resultSet.getString(1));
+			map.put(2, resultSet.getString(2));
+			map.put(3, resultSet.getString(3));
+			map.put(4, resultSet.getString(4));
+			map.put(5, resultSet.getString(5));
+			map.put(6, resultSet.getString(6));
+			map.put(7, resultSet.getString(7));
+			list.add(map);
 		}
 		return list;
 	}

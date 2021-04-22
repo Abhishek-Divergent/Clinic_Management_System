@@ -2,6 +2,7 @@ package com.divergent.crud;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -10,9 +11,9 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.divergent.doa.AppoinmentDOA;
-import com.divergent.dto.AppoinmentDto;
 
 /**
  * in this is class admin will appoint a doctor to patient
@@ -20,6 +21,7 @@ import com.divergent.dto.AppoinmentDto;
  * @author JAI MAHAKAL
  *
  */
+@Component
 public class Appoinment {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Appoinment.class.getName());
@@ -27,7 +29,6 @@ public class Appoinment {
 	@Autowired
 	private AppoinmentDOA appoinmentDOA;
 
-	
 	/**
 	 * appointment panel will perform all operation create ,update, delete and read
 	 */
@@ -72,15 +73,13 @@ public class Appoinment {
 	 */
 	private void appoinmentRead() {
 		try {
-			List<AppoinmentDto> list = appoinmentDOA.read();
+			List<Map<Integer, String>> list = appoinmentDOA.read();
 			if (list != null) {
 				System.out.printf(
 						"appoinment_id        patient_id         doc_id        patient_name        doc_name        problem        date         time\n");
-				for (AppoinmentDto appoinmentDto : list) {
-					System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ",
-							appoinmentDto.getAppoinmentid(), appoinmentDto.getPatientid(), appoinmentDto.getDocid(),
-							appoinmentDto.getDocname(), appoinmentDto.getPatientname(), appoinmentDto.getProblem(),
-							appoinmentDto.getDate(), appoinmentDto.getTime());
+				for (Map<Integer, String> map : list) {
+					System.out.printf("%s\t  %20s\t   %10s\t  %10s\t  %10s\t  %10s\t  %10s\t %10s ", map.get(1),
+							map.get(2), map.get(3), map.get(4), map.get(5), map.get(6), map.get(7), map.get(8));
 					System.out.println("\n");
 				}
 			} else {
@@ -166,11 +165,12 @@ public class Appoinment {
 		}
 
 	}
+
 	@PostConstruct
 	public void start() {
 		myLogger.debug(" Admin Crud Opeation Panel Start : ");
 		myLogger.info(" Admin Crud Opeation Panel Start : ");
-		
+
 	}
 
 	@PreDestroy

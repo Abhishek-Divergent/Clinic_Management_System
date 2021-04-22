@@ -2,6 +2,7 @@ package com.divergent.crud;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -10,10 +11,10 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.divergent.doa.DoctorCrudDOA;
-import com.divergent.dto.DoctorDto;
-
+@Component
 public class DoctorCrud {
 	private static final Logger myLogger = LoggerFactory.getLogger(DoctorCrud.class.getName());
 	private Scanner scobj = new Scanner(System.in);
@@ -118,14 +119,13 @@ public class DoctorCrud {
 
 	private void doctorRead() {
 		try {
-			List<DoctorDto> list = doctorCrudDOA.read();
+			List<Map<Integer, String>> list = doctorCrudDOA.read();
 			if (list != null) {
 				System.out.printf(
 						"doc_id          doc_username \t       doc_password \t   doc_name \t        doc_contact \t doc_speciality  doc_fees\n");
-				for (DoctorDto doctorDto : list) {
-					System.out.printf("%d %30s %15s  %20s %20s  %15s %10d \n", doctorDto.getId(),
-							doctorDto.getUsername(), doctorDto.getName(), doctorDto.getPassword(),
-							doctorDto.getContact(), doctorDto.getSpeciality(), doctorDto.getFees());
+				for (Map<Integer, String>  map : list) {
+					System.out.printf("%s %30s %15s  %20s %20s  %15s %10s \n",map.get(1), map.get(2), map.get(3),
+							map.get(4), map.get(5), map.get(6), map.get(7));
 				}
 			} else {
 				myLogger.info("List is Null");

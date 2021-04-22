@@ -1,12 +1,13 @@
 package com.divergent.clinicmanagementsystem;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.crud.Menu;
-import org.slf4j.LoggerFactory;
+import com.divergent.javaconfiguration.javaconfig;
 
 /**
  * This is main class Execution will here from here
@@ -20,8 +21,8 @@ public class ClinicManagementSystem {
 	public static void main(String[] args) {
 		myLogger.info(" Clinic Mangement Start: ");
 		@SuppressWarnings("resource")
-		ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-		Menu menu = (Menu) context.getBean("menuid");
+		ApplicationContext context = new AnnotationConfigApplicationContext(javaconfig.class);
+		Menu menu = (Menu) context.getBean(Menu.class);
 		menu.showMenu();
 		((AbstractApplicationContext) context).registerShutdownHook();
 

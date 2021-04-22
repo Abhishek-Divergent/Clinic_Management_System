@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.PatientCrudDOA;
-import com.divergent.dto.PatientDto;
 
 class PatientCrudDOATest {
 	Connection connection = null;
@@ -57,7 +57,7 @@ class PatientCrudDOATest {
 	void testRead() throws SQLException {
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 		PatientCrudDOA crudDOA = (PatientCrudDOA) context.getBean("patientdoaid");
-		List<PatientDto> list = crudDOA.read();
+		List<Map<Integer, String>> list = crudDOA.read();
 		assertFalse(list.isEmpty());
 	}
 

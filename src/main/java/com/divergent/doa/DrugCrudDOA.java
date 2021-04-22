@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
-import com.divergent.dto.DrugsDto;
-
+@Repository
 public class DrugCrudDOA {
 	@Autowired
 	private JDBCConnectionInterface connectionInterface;
@@ -35,22 +35,22 @@ public class DrugCrudDOA {
 				"insert into drugs  values (" + drugs_id + ", '" + drugs_name + "','" + drugs_description + "')");
 	}
 
-	public List<DrugsDto> read() throws SQLException {
+	public List<Map<Integer, String>> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
 		resultSet = statement.executeQuery("select *from drugs");
-		List<DrugsDto> list = new ArrayList<>();
+		List<Map<Integer, String>> list = new ArrayList<>();
+
 		while (resultSet.next()) {
-			@SuppressWarnings("resource")
-			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			DrugsDto drugsDto = (DrugsDto) context.getBean("drugsDto");
-			drugsDto.setDrugsid(resultSet.getInt(1));
-			drugsDto.setDrugsname(resultSet.getString(2));
-			drugsDto.setDrugsdescription(resultSet.getString(3));
-			list.add(drugsDto);
+			Map<Integer, String> map = new HashMap<>();
+			map.put(1, resultSet.getString(1));
+			map.put(2, resultSet.getString(2));
+			map.put(3, resultSet.getString(3));
+	
+			list.add(map);
 		}
 		return list;
 

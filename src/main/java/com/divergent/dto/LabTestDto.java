@@ -1,5 +1,8 @@
 package com.divergent.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LabTestDto {
 	private int labtestid, labtest_price;
 	private String labtest_name;

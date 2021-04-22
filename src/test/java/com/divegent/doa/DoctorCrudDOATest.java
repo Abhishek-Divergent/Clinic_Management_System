@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.DoctorCrudDOA;
-import com.divergent.dto.DoctorDto;
 
 class DoctorCrudDOATest {
 
@@ -27,6 +27,7 @@ class DoctorCrudDOATest {
 	@Before
 	void setup() throws Exception {
 
+		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 		databaseManager = (H2DatabaseManager) context.getBean("h2databaseid");
 		connection = databaseManager.connection();
@@ -46,7 +47,7 @@ class DoctorCrudDOATest {
 	public void read() throws SQLException {
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
-			List<DoctorDto> list=crudDOA.read();
+			List<Map<Integer, String>> list=crudDOA.read();
         assertEquals(false,list.isEmpty());			
 	}
 	@Test
@@ -70,7 +71,6 @@ class DoctorCrudDOATest {
 		ApplicationContext context = new ClassPathXmlApplicationContext("testconfig.xml");
 		DoctorCrudDOA crudDOA =(DoctorCrudDOA) context.getBean("doctordaoid");
 		assertEquals(1,crudDOA.delete(101));			
-
 	}
 	
 	

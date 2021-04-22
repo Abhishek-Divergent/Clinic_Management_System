@@ -1,5 +1,8 @@
 package com.divergent.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class AppoinmentDto {
 	private String appoinmentid, patientid, docid;
 	private String docname, patientname, problem, date, time;

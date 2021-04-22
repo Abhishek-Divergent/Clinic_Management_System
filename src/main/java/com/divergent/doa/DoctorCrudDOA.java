@@ -5,23 +5,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
-import com.divergent.dto.DoctorDto;
 
 /*
  * This is Doctor DOA class here We will perform all crud operation
  */
+@Repository
 public class DoctorCrudDOA {
 	@Autowired
 	private JDBCConnectionInterface connectionInterface;
 	
-	public List<DoctorDto> read() throws SQLException {
+	public List<Map<Integer, String>> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -29,21 +30,20 @@ public class DoctorCrudDOA {
 		statement = connection.createStatement();
 
 		resultSet = statement.executeQuery("select * from doctor");
-		List<DoctorDto> doctorDtos = new ArrayList<>();
+		List<Map<Integer, String>> list = new ArrayList<>();
+
 		while (resultSet.next()) {
-			@SuppressWarnings("resource")
-			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			DoctorDto doctorDto =(DoctorDto) context.getBean("doctorDto");
-			doctorDto.setId(resultSet.getInt(1));
-			doctorDto.setUsername(resultSet.getString(2));
-			doctorDto.setPassword(resultSet.getString(3));
-			doctorDto.setName(resultSet.getString(4));
-			doctorDto.setContact(resultSet.getString(5));
-			doctorDto.setSpeciality(resultSet.getString(6));
-			doctorDto.setFees(resultSet.getInt(7));
-			doctorDtos.add(doctorDto);
+			Map<Integer, String> map = new HashMap<>();
+			map.put(1, resultSet.getString(1));
+			map.put(2, resultSet.getString(2));
+			map.put(3, resultSet.getString(3));
+			map.put(4, resultSet.getString(4));
+			map.put(5, resultSet.getString(5));
+			map.put(6, resultSet.getString(6));
+			map.put(7, resultSet.getString(7));
+			list.add(map);
 		}
-		return doctorDtos;
+		return list;
 	}
 
 	public int create(int doc_id, String doc_username, String doc_password, String doc_name, String doc_contact,

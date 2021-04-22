@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.divergent.databaseconnection.H2DatabaseManager;
 import com.divergent.doa.DrugCrudDOA;
-import com.divergent.dto.DrugsDto;
 
 class DrugCrudDOATest {
 	Connection connection=null;
@@ -59,7 +59,7 @@ class DrugCrudDOATest {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"testconfig.xml");
 		 DrugCrudDOA crudDOA= (DrugCrudDOA) context.getBean("drugsdoaid");
-		 List<DrugsDto> list =crudDOA.read();
+		 List<Map<Integer, String>> list =crudDOA.read();
 		 assertFalse(list.isEmpty());
 	}
 

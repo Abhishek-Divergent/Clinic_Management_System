@@ -16,72 +16,72 @@
 
 		<!--********************* Menu Beans ******************* -->
 		
-		<bean id="menuid" class="com.divergent.crud.Menu"  scope="prototype"/>
+		<bean id="menuid" class="com.divergent.crud.Menu"  scope="singleton" />
 	
 		<!--******************** ADMIN Beans ******************* -->		
 	
-		<bean id="admin" class="com.divergent.crud.Admin" scope="prototype" />
+		<bean id="admin" class="com.divergent.crud.Admin"  scope="singleton" />
     
         <!-- ************************ Doctor Beans ********************* -->		
 		
-        <bean id="doctor" class="com.divergent.crud.Doctor" scope="prototype"/>
+        <bean id="doctor" class="com.divergent.crud.Doctor"  scope="singleton" />
      
 		<!-- *************************Patient CRUD********************** -->		
-		<bean id="patientCrud" class=" com.divergent.crud.PatientCrud" scope="prototype" />
+		<bean id="patientCrud" class=" com.divergent.crud.PatientCrud"  scope="singleton"  />
 		
 
 		<!-- *************************Patient DOA*********************** -->
-		<bean id="patientCrudDOA" class="com.divergent.doa.PatientCrudDOA" scope="prototype" />
+		<bean id="patientCrudDOA" class="com.divergent.doa.PatientCrudDOA"  scope="singleton"   />
 
 		<!-- **************************Patient DTO ************************-->
-		<bean id="patientDto" class="com.divergent.dto.PatientDto"  scope="prototype" />
+		<bean id="patientDto" class="com.divergent.dto.PatientDto"   scope="singleton"  />
 	
 		
 		<!-- *******************************Doctor CRUD ******************-->
-		<bean id="crudDoctor" class=" com.divergent.crud.DoctorCrud" scope="prototype"/>
+		<bean id="crudDoctor" class=" com.divergent.crud.DoctorCrud" scope="singleton"  />
 		
 	    <!-- *************************Doctor  DOA*********************** -->
-	     <bean id="doctorCrudDOA" class="com.divergent.doa.DoctorCrudDOA" scope="prototype"/>
+	     <bean id="doctorCrudDOA" class="com.divergent.doa.DoctorCrudDOA"  scope="singleton"  />
 	     
 
 		<!-- **************************Doctor DTO ************************-->
-		<bean id="doctorDto" class="com.divergent.dto.DoctorDto"  scope="prototype" />
+		<bean id="doctorDto" class="com.divergent.dto.DoctorDto"   scope="singleton" />
 	
 	
 		<!-- ************************** Appoinment CRUD ************************-->
-			<bean id="appoinment" class="com.divergent.crud.Appoinment " scope="prototype"/>
+			<bean id="appoinment" class="com.divergent.crud.Appoinment "  scope="singleton" />
 		
 		
 			<!-- ************************** Appoinment DOA ************************-->
-			<bean id="appoinmentDOA" class="com.divergent.doa.AppoinmentDOA" scope="prototype"/>
+			<bean id="appoinmentDOA" class="com.divergent.doa.AppoinmentDOA"  scope="singleton" />
 		
 		  <!-- ************************** Appoinment DTO ************************-->
-			<bean id="appoinmentDto" class="com.divergent.dto.AppoinmentDto"  scope="prototype"/>     
+			<bean id="appoinmentDto" class="com.divergent.dto.AppoinmentDto"   scope="singleton" />     
 		
 		
 		<!-- ************************** Labtest  CRUD ************************-->
-		<bean id="labTestCrud" class=" com.divergent.crud.LabTestCrud" scope="prototype" />
+		<bean id="labTestCrud" class=" com.divergent.crud.LabTestCrud"  scope="singleton"  />
 		
 		<!-- ************************** Labtest DOA************************-->
-		<bean id="labTestCrudDOA" class=" com.divergent.doa.LabTestCrudDOA" scope="prototype" />
+		<bean id="labTestCrudDOA" class=" com.divergent.doa.LabTestCrudDOA"  scope="singleton"  />
 		
 		<!-- ************************** Labtest  DTO************************-->
-		<bean id="labTestDto" class=" com.divergent.dto.LabTestDto" scope="prototype" />
+		<bean id="labTestDto" class=" com.divergent.dto.LabTestDto"  scope="singleton"  />
 		
 		
          <!-- ************************** Drugs  CRUD ************************-->
 		
-		<bean id="drugsCrud" class=" com.divergent.crud.DrugsCrud" scope="prototype"/>
+		<bean id="drugsCrud" class=" com.divergent.crud.DrugsCrud"  scope="singleton" />
 		 <!-- ************************** Drugs  DOA ************************-->
 		
-	    <bean id="drugCrudDOA" class=" com.divergent.doa.DrugCrudDOA" scope="prototype" />
+	    <bean id="drugCrudDOA" class=" com.divergent.doa.DrugCrudDOA"  scope="singleton"  />
 		 <!-- ************************** Drugs  DTO ************************-->
 		
-		<bean id="drugsDto" class=" com.divergent.dto.DrugsDto" scope="prototype" />
+		<bean id="drugsDto" class=" com.divergent.dto.DrugsDto"  scope="singleton"  />
 
 
 	   <!-- JDBC DataBase Connection -->
-	   <bean id="connectionInterface" class="com.divergent.databaseconnection.JDBCConnection" scope="prototype"/>
+	   <bean id="connectionInterface" class="com.divergent.databaseconnection.JDBCConnection"  scope="singleton" />
 	   
 	 
 

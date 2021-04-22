@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 /**
  * {@link JDBCConnection} implement to {@link JDBCConnectionInterface}
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author JAI MAHAKAL
  *
  */
+@Repository
 public class JDBCConnection implements JDBCConnectionInterface {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(JDBCConnection.class.getName());

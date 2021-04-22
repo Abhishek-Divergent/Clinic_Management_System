@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
-import com.divergent.dto.AppoinmentDto;
-
+@Repository
 public class AppoinmentDOA {
 	@Autowired
 	private JDBCConnectionInterface connectionInterface;
@@ -37,26 +37,25 @@ public class AppoinmentDOA {
 		return statement.executeUpdate("delete from  appoinment where appoinment_id=" + a + "");
 	}
 
-	public List<AppoinmentDto> read() throws SQLException {
+	public List<Map<Integer, String>> read() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		connection = connectionInterface.connection();
 		statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery("select *from appoinment");
-		List<AppoinmentDto> list = new ArrayList<>();
+		List<Map<Integer, String>> list = new ArrayList<>();
+
 		while (resultSet.next()) {
-			@SuppressWarnings("resource")
-			ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-			AppoinmentDto appoinmentDto = (AppoinmentDto) context.getBean("appoinmentDto");
-			appoinmentDto.setAppoinmentid(resultSet.getString(1));
-			appoinmentDto.setPatientid(resultSet.getString(2));
-			appoinmentDto.setDocid(resultSet.getString(3));
-			appoinmentDto.setDocname(resultSet.getString(4));
-			appoinmentDto.setPatientname(resultSet.getString(5));
-			appoinmentDto.setProblem(resultSet.getString(6));
-			appoinmentDto.setDate(resultSet.getString(7));
-			appoinmentDto.setTime(resultSet.getString(8));
-			list.add(appoinmentDto);
+			Map<Integer, String> map = new HashMap<>();
+			map.put(1, resultSet.getString(1));
+			map.put(2, resultSet.getString(2));
+			map.put(3, resultSet.getString(3));
+			map.put(4, resultSet.getString(4));
+			map.put(5, resultSet.getString(5));
+			map.put(6, resultSet.getString(6));
+			map.put(7, resultSet.getString(7));
+			map.put(8, resultSet.getString(8));
+			list.add(map);
 		}
 		return list;
 	}
