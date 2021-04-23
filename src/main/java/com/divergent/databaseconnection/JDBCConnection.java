@@ -6,7 +6,8 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,16 +19,18 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class JDBCConnection implements JDBCConnectionInterface {
-
+	@Autowired
+	private Environment environment;
 	private static final Logger myLogger = LoggerFactory.getLogger(JDBCConnection.class.getName());
-	@Value("${spring.datasource.username}")
-	private String name;
 
-	@Value("${spring.datasource.password}")
-	private String password;
+//	@Value("${spring.datasource.username}")
+	private String NAME = "spring.datasource.username";
 
-	@Value("${spring.datasource.url}")
-	private String url;
+	// @Value("${spring.datasource.password}")
+	private String PASSWORD = "spring.datasource.password";
+
+	// @Value("${spring.datasource.url}")
+	private String URL = "spring.datasource.url";
 
 	/**
 	 * connection method Establish the connection with Date Base
@@ -36,7 +39,8 @@ public class JDBCConnection implements JDBCConnectionInterface {
 	 */
 	public Connection connection() {
 		try {
-			return DriverManager.getConnection(url, name, password);
+			return DriverManager.getConnection(environment.getProperty(URL), environment.getProperty(NAME),
+					environment.getProperty(PASSWORD));
 		} catch (SQLException e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
