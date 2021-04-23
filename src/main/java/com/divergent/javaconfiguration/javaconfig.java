@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@ComponentScan(basePackages = { "com.divergent.javaconfiguration",
-		"com.divergent.crud", "com.divergent.databaseconnection", "com.divergent.doa"})
+@ComponentScan(basePackages = { "com.divergent.javaconfiguration", "com.divergent.crud",
+		"com.divergent.databaseconnection", "com.divergent.doa" })
 @Profile("dev")
 @PropertySource("classpath:/clinicmanagement.properties")
 public class javaconfig {

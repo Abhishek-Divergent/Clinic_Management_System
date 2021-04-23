@@ -14,6 +14,7 @@ import com.divergent.javaconfiguration.javaconfig;
  * @author Clinic Management System
  *
  */
+
 public class ClinicManagementSystem {
 	private static final Logger myLogger = LoggerFactory.getLogger(ClinicManagementSystem.class.getName());
 

@@ -25,6 +25,8 @@ public class Menu {
 	private Admin admin;
 	@Autowired
 	private Doctor doctor;
+	@Autowired
+	private Login login;
 
 	/**
 	 * showMenu Method Will show Admin login and Doctor login to choose
@@ -40,11 +42,11 @@ public class Menu {
 			admin: switch (choice) {
 			case 1: {
 				try {
-					if (admin.admin_Login()) {
+					if (login.admin_Login()) {
 						admin.admin_pannel();
 						break admin;
 					} else {
-						myLogger.warn("Connection is not Establish : ");
+						myLogger.warn(" Login Faild Try Again : ");
 						myLogger.info("\n------Press Y Then Enter Continue------ \n");
 					}
 				} catch (SQLException e) {
@@ -56,11 +58,11 @@ public class Menu {
 			}
 			case 2: {
 				try {
-					if (doctor.doctor_Login()) {
+					if (login.doctor_Login()) {
 						doctor.doctor_pannel();
 						break admin;
 					} else {
-						myLogger.warn("\n------Connection is Not Established------");
+						myLogger.warn("Login Faild Try Again : ");
 						myLogger.info("\n------Press Y Then Enter Continue------  \n");
 					}
 				} catch (SQLException e) {

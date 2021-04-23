@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,10 +20,14 @@ import org.springframework.stereotype.Repository;
 public class JDBCConnection implements JDBCConnectionInterface {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(JDBCConnection.class.getName());
+	@Value("${spring.datasource.username}")
+	private String name;
 
-	private String name = "root";
-	private String password = "root";
-	private String url = "jdbc:mysql://localhost:3306/clinicmanagementsystem";
+	@Value("${spring.datasource.password}")
+	private String password;
+
+	@Value("${spring.datasource.url}")
+	private String url;
 
 	/**
 	 * connection method Establish the connection with Date Base
@@ -35,7 +40,8 @@ public class JDBCConnection implements JDBCConnectionInterface {
 		} catch (SQLException e) {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
-			myLogger.info("Connetion Faild Run Again");
+			myLogger.warn("!Connetion Faild Run Again ");
+			System.exit(100);
 		}
 		return null;
 	}

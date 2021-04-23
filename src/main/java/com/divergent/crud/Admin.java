@@ -10,10 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.divergent.databaseconnection.JDBCConnectionInterface;
-
-import java.sql.*;
-
 /**
  * this class is ADMIN class will perform login operation and ADMIN panel
  * contain admin menu
@@ -27,8 +23,6 @@ public class Admin {
 	private static final Logger myLogger = LoggerFactory.getLogger(Admin.class.getName());
 	private Scanner scobj = new Scanner(System.in);
 	@Autowired
-	private JDBCConnectionInterface connectionInterface;
-	@Autowired
 	private PatientCrud patientCrud;
 	@Autowired
 	private DoctorCrud crudDoctor;
@@ -38,39 +32,6 @@ public class Admin {
 	private Appoinment appoinment;
 	@Autowired
 	private DrugsCrud drugsCrud;
-
-	/**
-	 * This method will connect to the database to verify ADMIN UserName And
-	 * Password will be verify Method will return Boolean Value
-	 * 
-	 * @return
-	 */
-	public boolean admin_Login() throws SQLException {
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rst = null;
-		myLogger.info("\n************************ADMIN  LOGIN PANEL************************\n");
-		System.out.println("\nEnter Admin User Name  ");
-		String admin_username = scobj.nextLine().trim();
-		System.out.println("\nEnter Admin Password   ");
-		String admin_password = scobj.nextLine().trim();
-		connection = connectionInterface.connection();
-		if (connection != null) {
-			statement = connection.createStatement();
-			rst = statement.executeQuery("select *from admin where adminid='" + admin_username + "' and adminpassword='"
-					+ admin_password + "'");
-			if (rst.next() == true) {
-				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
-				return true;
-			} else {
-				myLogger.info("\n----UNSUCCESSFULLY LOGIN ---\n");
-				return false;
-			}
-		} else {
-			myLogger.warn("Connection Is Null");
-		}
-		return false;
-	}
 
 	/**
 	 * ADMIN Panel method will Perform All CRUD Operation And Will Give Option to

@@ -31,36 +31,8 @@ public class Doctor {
 	private Scanner scobj = new Scanner(System.in);
 	private String doctortempusername;
 
-	public boolean doctor_Login() throws SQLException {
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rst = null;
-		String doctor_username;
-		String doctor_password;
-		myLogger.info("\n************************DOCTOR LOGIN PANEL************************\n");
-		System.out.print("\nEnter Doctor User Name :");
-		doctor_username = scobj.nextLine().trim();
-		System.out.print("\nEnter Doctor Password :");
-		doctor_password = scobj.nextLine().trim();
-		connection = connectionInterface.connection();
-		if (connection != null) {
-			statement = connection.createStatement();
-			rst = statement.executeQuery("select *from doctor where doc_username='" + doctor_username
-					+ "' and doc_password='" + doctor_password + "'");
-
-			if (rst.next() == true) {
-				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
-				doctortempusername = doctor_username;
-				return true;
-			} else {
-				myLogger.info("\n----UNSUCCESSFULLY LOGIN----\n");
-				myLogger.info("\n----Try Again----\n");
-				return false;
-			}
-		} else {
-			myLogger.warn("Connection is Null :");
-		}
-		return false;
+	public void setDoctortempusername(String doctortempusername) {
+		this.doctortempusername = doctortempusername;
 	}
 
 	public void doctor_pannel() {
