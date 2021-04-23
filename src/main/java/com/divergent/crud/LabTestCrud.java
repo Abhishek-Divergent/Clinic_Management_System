@@ -26,34 +26,34 @@ public class LabTestCrud {
 
 		p_panel: while (true) {
 			myLogger.info("\n************************LabTest CRUD************************\n");
-			System.out.println("1:LabTest Create ");
-			System.out.println("2:LabTest Read ");
-			System.out.println("3:LabTest Update  ");
-			System.out.println("4:LabTest Delete ");
-			System.out.println("5:Exit \n");
-			System.out.print("\nEnter Choice The Option----  ");
+			System.out.println("1:LabTest Create : ");
+			System.out.println("2:LabTest Read : ");
+			System.out.println("3:LabTest Update : ");
+			System.out.println("4:LabTest Delete : ");
+			System.out.println("5:Exit :  \n");
+			System.out.print("\nEnter Choice The Option----:  ");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
-				myLogger.info("Lab Test Create");
+				myLogger.info("Lab Test Create : ");
 				labTestCreate();
 				break;
 			case 2:
-				myLogger.info(" Lab Test Read" + "");
+				myLogger.info(" Lab Test Read : ");
 				labTestRead();
 				break;
 			case 3:
-				myLogger.info("Lab Test Update");
+				myLogger.info("Lab Test Update : ");
 				labTestUpdate();
 				break;
 			case 4:
-				myLogger.info("Lab Test Delete");
+				myLogger.info("Lab Test Delete : ");
 				labTestDelete();
 				break;
 			case 5:
 				break p_panel;
 			default:
-				myLogger.warn("--- -Worng Choioce---- \n");
+				myLogger.warn("----Worng Choioce----\n");
 
 				continue;
 			}
@@ -63,20 +63,20 @@ public class LabTestCrud {
 
 	private void labTestUpdate() {
 		labTestRead();
-		System.out.println("Enter  Drugs Id Which You Want to Update");
+		System.out.println("Enter  Drugs Id Which You Want to Update : ");
 		int rowid = scobj.nextInt();
 		String labtest_name;
 		int labtest_price;
-		System.out.print("\nLabTest Id----" + rowid);
+		System.out.print("\nLabTest Id----: " + rowid);
 		scobj.nextLine();
-		System.out.print("\nEnter LabTest Name  --");
+		System.out.print("\nEnter LabTest Name  --: ");
 		labtest_name = scobj.nextLine().trim();
 
-		System.out.print("\nEnter LabTest Price  --");
+		System.out.print("\nEnter LabTest Price  --: ");
 		labtest_price = scobj.nextInt();
 		try {
 			int i = labTestCrudDOA.update(rowid, labtest_name, labtest_price);
-			if (i == 1) {
+			if (i > 0) {
 				myLogger.info("\n-------Value Has Updated-------");
 			} else {
 				myLogger.info("\n-------Value Has Not Updated-------");
@@ -92,10 +92,14 @@ public class LabTestCrud {
 	private void labTestRead() {
 		try {
 			List<Map<Integer, String>> list = labTestCrudDOA.read();
-			System.out.printf(" LabTest Id\t  LabTest Name \t LabTest price \n");
-			for (Map<Integer, String> map : list) {
-				System.out.printf("%5s %20s %15s", map.get(1), map.get(2), map.get(3));
-				System.out.println("\n");
+			if (list != null) {
+				System.out.printf(" LabTest Id\t  LabTest Name \t LabTest price \n");
+				for (Map<Integer, String> map : list) {
+					System.out.printf("%5s %20s %15s", map.get(1), map.get(2), map.get(3));
+					System.out.println("\n");
+				}
+			} else {
+				myLogger.info("List Is Null ");
 			}
 		} catch (SQLException e) {
 			myLogger.error(e.getMessage());
@@ -109,17 +113,17 @@ public class LabTestCrud {
 		int labtest_id;
 		String labtest_name;
 		int labtest_price;
-		System.out.print("\nEnter LabTest Id  --");
+		System.out.print("\nEnter LabTest Id  --: ");
 		labtest_id = scobj.nextInt();
 		scobj.nextLine();
-		System.out.print("\nEnter LabTest Name  --");
+		System.out.print("\nEnter LabTest Name  --: ");
 		labtest_name = scobj.nextLine().trim();
 
-		System.out.print("\nEnter LabTest Price  --");
+		System.out.print("\nEnter LabTest Price  --: ");
 		labtest_price = scobj.nextInt();
 		try {
 			int i = labTestCrudDOA.create(labtest_id, labtest_name, labtest_price);
-			if (i == 1) {
+			if (i > 0) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {
 				myLogger.info("\n-------Value Has Not Inserted-------");
@@ -137,7 +141,7 @@ public class LabTestCrud {
 
 		try {
 			int i = labTestCrudDOA.delete(a);
-			if (i == 1) {
+			if (i > 0) {
 				myLogger.info("\n----Lab Test Delete----\n");
 
 			} else {

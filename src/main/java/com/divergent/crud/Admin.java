@@ -13,8 +13,11 @@ import org.springframework.stereotype.Component;
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
 import java.sql.*;
+
 /**
- * this class is ADMIN class  will perform login operation and ADMIN panel
+ * this class is ADMIN class will perform login operation and ADMIN panel
+ * contain admin menu
+ * 
  * @author JAI MAHAKAL
  *
  */
@@ -36,10 +39,9 @@ public class Admin {
 	@Autowired
 	private DrugsCrud drugsCrud;
 
-
 	/**
-	 * this method will connect to the database to verify Admin method will verify
-	 * Admin password and username Method will return Boolean Value
+	 * This method will connect to the database to verify ADMIN UserName And
+	 * Password will be verify Method will return Boolean Value
 	 * 
 	 * @return
 	 */
@@ -47,7 +49,7 @@ public class Admin {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rst = null;
-		myLogger.info("\n************************ADMIN  LogIn PANEL************************\n");
+		myLogger.info("\n************************ADMIN  LOGIN PANEL************************\n");
 		System.out.println("\nEnter Admin User Name  ");
 		String admin_username = scobj.nextLine().trim();
 		System.out.println("\nEnter Admin Password   ");
@@ -61,17 +63,18 @@ public class Admin {
 				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
 				return true;
 			} else {
-				myLogger.info("\n----Try Again UNSUCCESSFULLY LOGIN ---\n");
+				myLogger.info("\n----UNSUCCESSFULLY LOGIN ---\n");
 				return false;
 			}
 		} else {
-			myLogger.warn("Connection is Null ");
+			myLogger.warn("Connection Is Null");
 		}
 		return false;
 	}
 
 	/**
-	 * admin panel method   will perfrom all crud operation and will give option to choose
+	 * ADMIN Panel method will Perform All CRUD Operation And Will Give Option to
+	 * choose
 	 * 
 	 * @return
 	 */
@@ -79,9 +82,9 @@ public class Admin {
 		myLogger.info("************************ADMIN Opreation PANEL************************\n");
 		adminpanel: while (true) {
 			System.out.println("1. CRUD Patient " + "\n2. CRUD Doctor" + "\n3. CRUD Drugs " + "\n4. CRUD Lab Test"
-					+ "\n5. Book appointment for a patient by selecting Patient, " + "\n6. Doctor and Data/time"
-					+ "\n7. Exits\n\n");
-			System.out.print("\nEnter Choice The Option----  ");
+					+ "\n5. Book appointment for a patient by selecting Patient, " + // "\n6. Doctor and Data/time"+
+					"\n6. Exits\n\n");
+			System.out.print("\nEnter Choice The Option----");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1: {
@@ -106,25 +109,26 @@ public class Admin {
 
 				appoinment.appoinmentPanel();
 				break;
-			case 7:
+			case 6:
 				break adminpanel;
 			default:
-				myLogger.warn("--- -Worng Choioce---- \n");
+				myLogger.warn("----Worng Choioce---- \n");
 				continue;
 			}
 		}
 		return true;
 	}
+
 	@PostConstruct
 	public void start() {
-		myLogger.debug(" Admin Panel  :");
-		myLogger.info(" Admin Panel  :");
-		
+		myLogger.debug("Admin Panel :");
+		myLogger.info("Admin Panel :");
+
 	}
 
 	@PreDestroy
 	public void end() {
-		myLogger.debug(" Admin Panel : ");
-		myLogger.info(" Admin Panel : ");
+		myLogger.debug(" Admin Panel :");
+		myLogger.info(" Admin Panel :");
 	}
 }

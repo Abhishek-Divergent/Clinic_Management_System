@@ -16,10 +16,16 @@ import org.springframework.stereotype.Component;
 
 import com.divergent.databaseconnection.JDBCConnectionInterface;
 
+/**
+ * This is Doctor class Contain doctor_Login to login doctor And Doctor Panel
+ * Contain All Operation Performed By Doctor
+ * 
+ * @author JAI MAHAKAL
+ *
+ */
 @Component
 public class Doctor {
 	private static final Logger myLogger = LoggerFactory.getLogger(Doctor.class.getName());
-
 	@Autowired
 	private JDBCConnectionInterface connectionInterface;
 	private Scanner scobj = new Scanner(System.in);
@@ -32,9 +38,9 @@ public class Doctor {
 		String doctor_username;
 		String doctor_password;
 		myLogger.info("\n************************DOCTOR LOGIN PANEL************************\n");
-		System.out.print("\nEnter Doctor User Name  ");
+		System.out.print("\nEnter Doctor User Name :");
 		doctor_username = scobj.nextLine().trim();
-		System.out.print("\nEnter Doctor Password   ");
+		System.out.print("\nEnter Doctor Password :");
 		doctor_password = scobj.nextLine().trim();
 		connection = connectionInterface.connection();
 		if (connection != null) {
@@ -44,43 +50,40 @@ public class Doctor {
 
 			if (rst.next() == true) {
 				myLogger.info("\n----SUCCESSFULLY LOGIN----\n");
-
 				doctortempusername = doctor_username;
 				return true;
-
 			} else {
+				myLogger.info("\n----UNSUCCESSFULLY LOGIN----\n");
 				myLogger.info("\n----Try Again----\n");
 				return false;
 			}
 		} else {
-			myLogger.warn("Connection is Null ");
+			myLogger.warn("Connection is Null :");
 		}
 		return false;
 	}
 
 	public void doctor_pannel() {
-		myLogger.info("Panel for doctor to select  option");
+		myLogger.info("Panel For Doctor To Select  Option :");
 		doctorpanel: while (true) {
-//			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
-//					+ "3. Check Patient History and His Prescription\n" + "4. Exit\n");
 			System.out.print("\n1. List of Appointments  Patient \n" + "2. Add Prescription And Notes For a Patient\n"
 					+ "3. Exit\n");
-			System.out.print("\nEnter Choice The Option----  ");
+			System.out.print("\nEnter Choice The Option----  :");
 			int choice = scobj.nextInt();
 			switch (choice) {
 			case 1:
-				myLogger.info("Patient list");
+				myLogger.info(" Patient List :");
 				patientList();
 				break;
 			case 2:
-				myLogger.info("Patient prescription");
+				myLogger.info(" Patient Prescription :");
 				addPrescription();
 				break;
 			case 3:
 
 				break doctorpanel;
 			default:
-				myLogger.warn("--- -Worng Choioce---- \n");
+				myLogger.warn("----- Worng Choioce -----\n");
 				continue;
 			}
 		}
@@ -96,28 +99,33 @@ public class Doctor {
 		Connection connection = null;
 		Statement statement = null;
 
-		System.out.print("\nEnter priscription Id  --");
+		System.out.print("\nEnter Priscription Id  --:");
 		priscription_id = scobj.nextInt();
-		System.out.print("\nEnter doctor Id  --");
+		System.out.print("\nEnter Doctor Id  --:");
 		doc_id = scobj.nextInt();
-		System.out.print("\nEnter patient Id  --");
+		System.out.print("\nEnter Patient Id  --:");
 		p_id = scobj.nextInt();
 		scobj.nextLine();
-		System.out.print("\nEnter Note Name  --");
+		System.out.print("\nEnter Note Name  --:");
 		note = scobj.nextLine().trim();
-		System.out.print("\nEnter  priscription  --");
+		System.out.print("\nEnter  Priscription  --:");
 		priscription = scobj.nextLine().trim();
 		try {
 			connection = connectionInterface.connection();
 			statement = connection.createStatement();
-			statement.executeUpdate("insert into  priscription  values(" + priscription_id + "," + doc_id + "," + p_id
-					+ ",'" + priscription + "','" + note + "')");
-			myLogger.info("\n-------Value Has Inserted-------");
+			int i = statement.executeUpdate("insert into  priscription  values(" + priscription_id + "," + doc_id + ","
+					+ p_id + ",'" + priscription + "','" + note + "')");
+			if (i > 0) {
+				myLogger.info("\n:-------Value Has Inserted-------:");
+			} else {
+				myLogger.info("\n-------Value Has Not Inserted------- :\n");
+
+			}
+
 		} catch (SQLException e) {
 
 			myLogger.warn(e.getMessage());
 			myLogger.error(e.getMessage());
-			myLogger.info("\"\\n-------Value Has Inserted-------\"");
 
 		}
 	}
@@ -136,10 +144,9 @@ public class Doctor {
 				tempid = Integer.parseInt(resultSet.getString(1));
 			}
 			resultSet = statement.executeQuery("SELECT * FROM  appoinment where doc_id=" + tempid + "");
-			myLogger.info("\n- -------- Patient Appoinment List--------\n ");
-			System.out.print("\n- -------- Patient Appoinment List--------\n ");
+			myLogger.info("\n:--------- Patient Appoinment List --------\n");
 			System.out.printf(
-					"appoinment_id \t patient_id \t doc_id \t   doc_name \t patient_name\t \t problem \t  date\t  time");
+					"Appoinment_Id \t Patient_Id \t Doctor_Id \t   Doctor_Name \t Patient_Name\t \t Problem \t  Date\t  Time");
 			while (resultSet.next()) {
 				System.out.printf("\n  %s \t \t %s \t \t %s \t \t %s \t %s \t \t  %s  \t  %s \t   %s  \n",
 						resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
@@ -150,11 +157,12 @@ public class Doctor {
 			myLogger.error(e.getMessage());
 		}
 	}
+
 	@PostConstruct
 	public void start() {
-		myLogger.debug(" Doctor Panel Start : ");
-		myLogger.info(" Doctor Panel Start : ");
-		
+		myLogger.debug(" Doctor Panel Start  : ");
+		myLogger.info(" Doctor Panel Start  : ");
+
 	}
 
 	@PreDestroy
@@ -162,5 +170,5 @@ public class Doctor {
 		myLogger.debug(" Doctor Panel End : ");
 		myLogger.info(" Doctor Panel End : ");
 	}
-	
+
 }

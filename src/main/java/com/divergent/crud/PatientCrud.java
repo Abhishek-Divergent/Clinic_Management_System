@@ -63,7 +63,7 @@ public class PatientCrud {
 			myLogger.info("\n----Enter Patient ID  To Delete Patient --");
 			int a = scobj.nextInt();
 			int i = patientCrudDOA.delete(a);
-			if (i == 1) {
+			if (i > 0) {
 				System.out.println("\n-------Patient Deleted--------");
 
 			} else {
@@ -105,7 +105,7 @@ public class PatientCrud {
 			System.out.print("\nEnter Patient Contact  --");
 			p_contact = scobj.nextLine().trim();
 			int i = patientCrudDOA.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			if (i == 1) {
+			if (i > 0) {
 				myLogger.info("\n-------Value Has Updated-------");
 			} else {
 				myLogger.warn("\n-------Value NOT Updated-------");
@@ -167,7 +167,7 @@ public class PatientCrud {
 		p_contact = scobj.nextLine().trim();
 		try {
 			int i = patientCrudDOA.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			if (i == 1) {
+			if (i >0 ) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {
 				myLogger.warn("\n-------Value NOT Insert-------");

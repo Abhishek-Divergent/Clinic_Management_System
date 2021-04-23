@@ -25,7 +25,7 @@ import com.divergent.doa.AppoinmentDOA;
 public class Appoinment {
 
 	private static final Logger myLogger = LoggerFactory.getLogger(Appoinment.class.getName());
-	public Scanner scobj = new Scanner(System.in);
+	private Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private AppoinmentDOA appoinmentDOA;
 
@@ -105,7 +105,7 @@ public class Appoinment {
 			System.out.print("\n----Enter Appoinment ID  To Delete Drug --");
 			int a = scobj.nextInt();
 			int i = appoinmentDOA.delete(a);
-			if (i == 1) {
+			if (i > 0) {
 				myLogger.info("\n----Appoinment Delete----\n");
 			} else {
 				myLogger.info("\n---- Appoinment Not Delete----\n");
@@ -153,7 +153,7 @@ public class Appoinment {
 		String time = scobj.nextLine();
 		try {
 			int i = appoinmentDOA.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
-			if (i == 1) {
+			if (i >0) {
 				myLogger.info("\n-------Value Has Inserted-------");
 			} else {
 				myLogger.info("\n-------Value Has Not Inserted-------");

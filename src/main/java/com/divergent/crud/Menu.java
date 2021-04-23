@@ -33,9 +33,9 @@ public class Menu {
 		while (true) {
 			myLogger.info("**************Clinic Management System**************\n");
 			System.out.println("Select Option\n");
-			System.out.println("1. Admin\n2. Doctor\n3. Exit");
+			System.out.println("1. Admin : \n2. Doctor : \n3. Exit : ");
 			int choice = 0;
-			System.out.println("\nEnter Choice The Option----  ");
+			System.out.println("\nEnter Choice The Option----: ");
 			choice = scobj.nextInt();
 			admin: switch (choice) {
 			case 1: {
@@ -44,14 +44,12 @@ public class Menu {
 						admin.admin_pannel();
 						break admin;
 					} else {
-						myLogger.warn("Connection is not establish");
-						myLogger.info("\n------Press Y Then Enter Continue------  \n");
+						myLogger.warn("Connection is not Establish : ");
+						myLogger.info("\n------Press Y Then Enter Continue------ \n");
 					}
 				} catch (SQLException e) {
 					myLogger.error(e.getMessage());
 					myLogger.warn(e.getMessage());
-					myLogger.info("Connection is not establish");
-					myLogger.info("\n------Press Y Then Enter Continue------  \n");
 				}
 				scobj.next().charAt(0);
 				break;
@@ -68,14 +66,12 @@ public class Menu {
 				} catch (SQLException e) {
 					myLogger.error(e.getMessage());
 					myLogger.warn(e.getMessage());
-					myLogger.info("Connection is not establish");
-					myLogger.info("\n------Press Y Then Enter Continue------  \n");
 				}
 				scobj.next().charAt(0);
 				break;
 			}
 			case 3:
-				myLogger.info("\n------Thank you!  Application has shut down Run Again ");
+				myLogger.info("\n------Thank you!  Application Has Shut Down Run Again ");
 				System.exit(0);
 			default:
 				myLogger.warn("--- -Worng Choioce---- \n");
