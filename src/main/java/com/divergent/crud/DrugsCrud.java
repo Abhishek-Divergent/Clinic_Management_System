@@ -76,20 +76,31 @@ public class DrugsCrud {
 
 		System.out.print("\nEnter  Drugs Description  -- : ");
 		Drugs_description = scobj.nextLine().trim();
-		try {
 
-			int i = drugCrudDOA.update(rowid, Drugs_name, Drugs_description);
-			if (i > 0) {
-				myLogger.info("\n-------Value Has Updated------- : ");
-			} else {
-				myLogger.info("\n-------Value Has Updated------- : ");
+		DrugsDto drugsDto = applicationContext.getBean(DrugsDto.class);
+		drugsDto.setDrugsdescription(Drugs_description);
+		drugsDto.setDrugsname(Drugs_description);
+		Boolean result = DrugsDto.validator(drugsDto);
+		if (result) {
+			try {
 
+				int i = drugCrudDOA.update(rowid, Drugs_name, Drugs_description);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Updated------- : ");
+				} else {
+					myLogger.info("\n-------Value Has Updated------- : ");
+
+				}
+			} catch (Exception e) {
+				myLogger.warn(e.getMessage());
+				myLogger.error(e.getMessage());
 			}
-		} catch (Exception e) {
-			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage());
-
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			DrugsCreate();
 		}
+
 	}
 
 	private void DrugsRead() {

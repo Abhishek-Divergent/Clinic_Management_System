@@ -78,19 +78,29 @@ public class LabTestCrud {
 
 		System.out.print("\nEnter LabTest Price  --: ");
 		labtest_price = scobj.nextInt();
-		try {
-			int i = labTestCrudDOA.update(rowid, labtest_name, labtest_price);
-			if (i > 0) {
-				myLogger.info("\n-------Value Has Updated-------");
-			} else {
-				myLogger.info("\n-------Value Has Not Updated-------");
+		LabTestDto labTestDto = applicationContext.getBean(LabTestDto.class);
+		labTestDto.setLabtest_name(labtest_name);
+		labTestDto.setLabtestid(labtest_price);
+		labTestDto.setLabtestid(labtest_price);
+		Boolean result = LabTestDto.validator(labTestDto);
+		if (result) {
+			try {
+				int i = labTestCrudDOA.update(rowid, labtest_name, labtest_price);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Updated-------");
+				} else {
+					myLogger.info("\n-------Value Has Not Updated-------");
+				}
+			} catch (Exception e) {
+				myLogger.warn(e.getMessage());
+				myLogger.error(e.getMessage());
+
 			}
-		} catch (Exception e) {
-			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage());
-
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			labTestCreate();
 		}
-
 	}
 
 	private void labTestRead() {

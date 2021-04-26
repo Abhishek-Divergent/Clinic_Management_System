@@ -84,43 +84,58 @@ public class PatientCrud {
 	}
 
 	private void patientUpdate() {
-		try {
-			patientRead();
-			myLogger.info("\n----Enter Patient ID Which You Want to UPDATE --");
-			int rowid = scobj.nextInt();
-			scobj.nextLine();
-			int p_age;
-			int p_weight;
-			String p_name;
-			String p_gender;
-			String p_address;
-			String p_contact;
-			System.out.print("\nEnter Patient Name  --");
-			p_name = scobj.nextLine().trim();
-			System.out.print("\nEnter Patient Gender  --");
-			p_gender = scobj.nextLine().trim();
-			System.out.print("\nEnter Patient Age  --");
-			p_age = scobj.nextInt();
-			System.out.print("\nEnter Patient Weight  --");
-			p_weight = scobj.nextInt();
-			scobj.nextLine();
-			System.out.print("\nEnter Patient Address  --");
-			p_address = scobj.nextLine().trim();
-			System.out.print("\nEnter Patient Contact  --");
-			p_contact = scobj.nextLine().trim();
-			int i = patientCrudDOA.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			if (i > 0) {
-				myLogger.info("\n-------Value Has Updated-------");
-			} else {
-				myLogger.warn("\n-------Value NOT Updated-------");
+
+		patientRead();
+		myLogger.info("\n----Enter Patient ID Which You Want to UPDATE --");
+		int rowid = scobj.nextInt();
+		scobj.nextLine();
+		int p_age;
+		int p_weight;
+		String p_name;
+		String p_gender;
+		String p_address;
+		String p_contact;
+		System.out.print("\nEnter Patient Name  --");
+		p_name = scobj.nextLine().trim();
+		System.out.print("\nEnter Patient Gender  --");
+		p_gender = scobj.nextLine().trim();
+		System.out.print("\nEnter Patient Age  --");
+		p_age = scobj.nextInt();
+		System.out.print("\nEnter Patient Weight  --");
+		p_weight = scobj.nextInt();
+		scobj.nextLine();
+		System.out.print("\nEnter Patient Address  --");
+		p_address = scobj.nextLine().trim();
+		System.out.print("\nEnter Patient Contact  --");
+		p_contact = scobj.nextLine().trim();
+		PatientDto patientDto = context.getBean(PatientDto.class);
+
+		patientDto.setName(p_name);
+		patientDto.setWeight(p_weight);
+		patientDto.setAddress(p_address);
+		patientDto.setAge(p_age);
+		patientDto.setGender(p_gender);
+		patientDto.setContact(p_contact);
+		Boolean result = PatientDto.validator(patientDto);
+		if (result) {
+			try {
+				int i = patientCrudDOA.update(rowid, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Updated-------");
+				} else {
+					myLogger.warn("\n-------Value NOT Updated-------");
+				}
+
+			} catch (SQLException e) {
+				myLogger.error(e.getMessage());
+				myLogger.warn(e.getMessage());
+
 			}
-
-		} catch (SQLException e) {
-			myLogger.error(e.getMessage());
-			myLogger.warn(e.getMessage());
-
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			patientCreate();
 		}
-
 	}
 
 	private void patientRead() {

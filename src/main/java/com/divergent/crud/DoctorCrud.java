@@ -106,19 +106,33 @@ public class DoctorCrud {
 		doc_contact = scobj.nextLine().trim();
 		System.out.print("\nEnter Doctor Fees  --: ");
 		doc_fees = scobj.nextInt();
-		try {
+		DoctorDto doctorDto = applicationContext.getBean(DoctorDto.class);
+		doctorDto.setName(doc_name);
+		doctorDto.setPassword(doc_password);
+		doctorDto.setContact(doc_contact);
+		doctorDto.setFees(doc_fees);
+		doctorDto.setSpeciality(doc_speciality);
+		doctorDto.setUsername(doc_username);
+		Boolean result = DoctorDto.validator(doctorDto);
+		if (result) {
+			try {
 
-			int i = doctorCrudDOA.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality,
-					doc_fees);
-			if (i > 0) {
-				myLogger.info("\n-------Value  Updated------- : ");
-			} else {
-				myLogger.info("\n-------Value Not Updated------- : ");
+				int i = doctorCrudDOA.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality,
+						doc_fees);
+				if (i > 0) {
+					myLogger.info("\n-------Value  Updated------- : ");
+				} else {
+					myLogger.info("\n-------Value Not Updated------- : ");
+				}
+
+			} catch (SQLException e) {
+				myLogger.warn(e.getMessage());
+				myLogger.error(e.getMessage());
 			}
-
-		} catch (SQLException e) {
-			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage());
+		} else {
+			myLogger.info("\n-------Value Not Updated------- : ");
+			myLogger.info("\n-------Enter Again Data -------");
+			doctorCreate();
 		}
 	}
 
