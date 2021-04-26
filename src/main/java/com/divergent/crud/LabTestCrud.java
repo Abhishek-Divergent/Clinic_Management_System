@@ -11,9 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.divergent.doa.LabTestCrudDOA;
+import com.divergent.dto.LabTestDto;
 
 @Component
 public class LabTestCrud {
@@ -21,6 +23,8 @@ public class LabTestCrud {
 	private Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private LabTestCrudDOA labTestCrudDOA;
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	public void labTestPanel() {
 
@@ -121,18 +125,29 @@ public class LabTestCrud {
 
 		System.out.print("\nEnter LabTest Price  --: ");
 		labtest_price = scobj.nextInt();
-		try {
-			int i = labTestCrudDOA.create(labtest_id, labtest_name, labtest_price);
-			if (i > 0) {
-				myLogger.info("\n-------Value Has Inserted-------");
-			} else {
-				myLogger.info("\n-------Value Has Not Inserted-------");
+		LabTestDto labTestDto = applicationContext.getBean(LabTestDto.class);
+		labTestDto.setLabtest_name(labtest_name);
+		labTestDto.setLabtestid(labtest_price);
+		labTestDto.setLabtestid(labtest_price);
+		Boolean result = LabTestDto.validator(labTestDto);
+		if (result) {
+			try {
+				int i = labTestCrudDOA.create(labtest_id, labtest_name, labtest_price);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Inserted-------");
+				} else {
+					myLogger.info("\n-------Value Has Not Inserted-------");
+				}
+			} catch (Exception e) {
+				myLogger.error(e.getMessage());
+				myLogger.warn(e.getMessage());
 			}
-		} catch (Exception e) {
-			myLogger.error(e.getMessage());
-			myLogger.warn(e.getMessage());
-		}
 
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			labTestCreate();
+		}
 	}
 
 	private void labTestDelete() {

@@ -23,7 +23,7 @@ public class JDBCConnection implements JDBCConnectionInterface {
 	private Environment environment;
 	private static final Logger myLogger = LoggerFactory.getLogger(JDBCConnection.class.getName());
 
-//	@Value("${spring.datasource.username}")
+	// @Value("${spring.datasource.username}")
 	private String NAME = "spring.datasource.username";
 
 	// @Value("${spring.datasource.password}")
@@ -45,7 +45,7 @@ public class JDBCConnection implements JDBCConnectionInterface {
 			myLogger.error(e.getMessage());
 			myLogger.warn(e.getMessage());
 			myLogger.warn("!Connetion Faild Run Again ");
-			System.exit(100);
+			System.exit(0);
 		}
 		return null;
 	}

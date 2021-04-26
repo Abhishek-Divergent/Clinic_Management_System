@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.hibernate.validator.constraints.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class Menu {
 			myLogger.info("**************Clinic Management System**************\n");
 			System.out.println("Select Option\n");
 			System.out.println("1. Admin : \n2. Doctor : \n3. Exit : ");
+         	@Range(min=1,max =3)
 			int choice = 0;
 			System.out.println("\nEnter Choice The Option----: ");
 			choice = scobj.nextInt();

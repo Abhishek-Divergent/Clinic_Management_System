@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.divergent.crud.Menu;
-import com.divergent.javaconfiguration.javaconfig;
+import com.divergent.javaconfiguration.JavaConfig;
 
 /**
  * This is main class of Application
@@ -23,7 +23,7 @@ public class ClinicManagementSystem {
 		@SuppressWarnings("resource")
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.getEnvironment().setActiveProfiles("dev");
-		context.register(javaconfig.class);
+		context.register(JavaConfig.class);
 		context.refresh();
 		Menu menu = (Menu) context.getBean(Menu.class);
 		menu.showMenu();

@@ -11,9 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.divergent.doa.DoctorCrudDOA;
+import com.divergent.dto.DoctorDto;
 
 @Component
 public class DoctorCrud {
@@ -21,6 +23,8 @@ public class DoctorCrud {
 	private Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private DoctorCrudDOA doctorCrudDOA;
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	public void DoctorPanel() {
 		p_panel: while (true) {
@@ -66,7 +70,7 @@ public class DoctorCrud {
 			System.out.print("\n----Enter Doctor ID  To Delete Doctor ---- : ");
 			int a = scobj.nextInt();
 			int i = doctorCrudDOA.delete(a);
-			if (i >0) {
+			if (i > 0) {
 				myLogger.info("\n----Doctor  Deleted ---- : ");
 			} else {
 				myLogger.info("\n----Doctor Not Deleted ---- : ");
@@ -106,7 +110,7 @@ public class DoctorCrud {
 
 			int i = doctorCrudDOA.update(rowid, doc_name, doc_username, doc_password, doc_contact, doc_speciality,
 					doc_fees);
-			if (i >0) {
+			if (i > 0) {
 				myLogger.info("\n-------Value  Updated------- : ");
 			} else {
 				myLogger.info("\n-------Value Not Updated------- : ");
@@ -148,6 +152,7 @@ public class DoctorCrud {
 		String doc_contact;
 		String doc_speciality;
 		int doc_fees;
+
 		System.out.print("\nEnter Doctor Id  --: ");
 		doc_id = scobj.nextInt();
 		scobj.nextLine();
@@ -164,19 +169,35 @@ public class DoctorCrud {
 		doc_contact = scobj.nextLine().trim();
 		System.out.println("\nEnter Doctor Fees  --: ");
 		doc_fees = scobj.nextInt();
+		DoctorDto doctorDto = applicationContext.getBean(DoctorDto.class);
+		doctorDto.setId(doc_id);
+		doctorDto.setName(doc_name);
+		doctorDto.setPassword(doc_password);
+		doctorDto.setContact(doc_contact);
+		doctorDto.setFees(doc_fees);
+		doctorDto.setSpeciality(doc_speciality);
+		doctorDto.setUsername(doc_username);
+		Boolean result = DoctorDto.validator(doctorDto);
 
-		try {
-			int i = doctorCrudDOA.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality,
-					doc_fees);
-			if (i >0 ) {
-				myLogger.info("\n-------Value Has Inserted-------: ");
-			} else {
-				myLogger.info("\n-------Value Has Inserted------- :");
+		if (result) {
 
+			try {
+				int i = doctorCrudDOA.create(doc_id, doc_username, doc_password, doc_name, doc_contact, doc_speciality,
+						doc_fees);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Inserted-------: ");
+				} else {
+					myLogger.info("\n-------Value Has Inserted------- :");
+
+				}
+			} catch (SQLException e) {
+				myLogger.warn(e.getMessage());
+				myLogger.error(e.getMessage());
 			}
-		} catch (SQLException e) {
-			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage());
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			doctorCreate();
 		}
 	}
 

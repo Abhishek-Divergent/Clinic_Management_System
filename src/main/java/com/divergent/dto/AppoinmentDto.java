@@ -1,33 +1,66 @@
 package com.divergent.dto;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import com.divergent.clinicmanagementsystem.ClinicManagementSystem;
 
 @Component
 public class AppoinmentDto {
-	private String appoinmentid, patientid, docid;
-	private String docname, patientname, problem, date, time;
+	private static final Logger myLogger = LoggerFactory.getLogger(ClinicManagementSystem.class.getName());
+	@Range(min = 1, message = "Please Enter Id Like 1.. ")
+	private int appoinmentid;
+	@Range(min = 1001, message = "Please Enter Id Like 1001.. ")
+	private int patientid;
+	@Range(min = 101, message = "Please Enter Id Like 101.. ")
+	private int docid;
+	@Min(value = 5, message = " Name should not be less than 5 Character")
+	@Max(value = 15, message = " Name should not be more than 15 Character")
+	private String docname;
+	@Min(value = 5, message = " Name should not be less than 5 Character")
+	@Max(value = 15, message = " Name should not be more than 15 Character")
+	private String patientname;
+	@NotNull
+	private String problem;
+	@DateTimeFormat
+	private String date;
+	@DateTimeFormat
+	private String time;
 
-	public String getAppoinmentid() {
+	public int getAppoinmentid() {
 		return appoinmentid;
 	}
 
-	public void setAppoinmentid(String appoinmentid) {
+	public void setAppoinmentid(int appoinmentid) {
 		this.appoinmentid = appoinmentid;
 	}
 
-	public String getPatientid() {
+	public int getPatientid() {
 		return patientid;
 	}
 
-	public void setPatientid(String patientid) {
+	public void setPatientid(int patientid) {
 		this.patientid = patientid;
 	}
 
-	public String getDocid() {
+	public int getDocid() {
 		return docid;
 	}
 
-	public void setDocid(String docid) {
+	public void setDocid(int docid) {
 		this.docid = docid;
 	}
 
@@ -69,6 +102,20 @@ public class AppoinmentDto {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public static boolean validator(AppoinmentDto appoinmentDto) {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<AppoinmentDto>> violations = validator.validate(appoinmentDto);
+		for (ConstraintViolation<AppoinmentDto> violation : violations) {
+			myLogger.error(violation.getMessage());
+		}
+		if (violations.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

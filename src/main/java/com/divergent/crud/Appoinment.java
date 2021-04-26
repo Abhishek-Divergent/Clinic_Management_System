@@ -11,9 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.divergent.doa.AppoinmentDOA;
+import com.divergent.dto.AppoinmentDto;
 
 /**
  * in this is class admin will appoint a doctor to patient
@@ -28,6 +30,8 @@ public class Appoinment {
 	private Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private AppoinmentDOA appoinmentDOA;
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	/**
 	 * appointment panel will perform all operation create ,update, delete and read
@@ -151,19 +155,36 @@ public class Appoinment {
 		date = scobj.nextLine();
 		System.out.print("\nEnter  Time  --");
 		String time = scobj.nextLine();
-		try {
-			int i = appoinmentDOA.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date, time);
-			if (i >0) {
-				myLogger.info("\n-------Value Has Inserted-------");
-			} else {
-				myLogger.info("\n-------Value Has Not Inserted-------");
+		AppoinmentDto appoinmentDto = applicationContext.getBean(AppoinmentDto.class);
+		appoinmentDto.setAppoinmentid(appoiment_id);
+		appoinmentDto.setDate(date);
+		appoinmentDto.setDocid(doc_id);
+		appoinmentDto.setDocname(doc_name);
+		appoinmentDto.setPatientid(patient_id);
+		appoinmentDto.setProblem(problem);
+		appoinmentDto.setTime(time);
+		appoinmentDto.setPatientname(patient_name);
+		Boolean result = AppoinmentDto.validator(appoinmentDto);
+		if (result) {
+			try {
+				int i = appoinmentDOA.create(appoiment_id, doc_id, patient_id, doc_name, patient_name, problem, date,
+						time);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Inserted-------");
+				} else {
+					myLogger.info("\n-------Value Has Not Inserted-------");
 
+				}
+			} catch (SQLException e) {
+				myLogger.warn(e.getMessage());
+				myLogger.error(e.getMessage());
 			}
-		} catch (SQLException e) {
-			myLogger.warn(e.getMessage());
-			myLogger.error(e.getMessage());
-		}
 
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			appoinmentCreate();
+		}
 	}
 
 	@PostConstruct

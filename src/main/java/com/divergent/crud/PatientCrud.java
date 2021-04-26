@@ -11,9 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.divergent.doa.PatientCrudDOA;
+import com.divergent.dto.PatientDto;
 
 @Component
 public class PatientCrud {
@@ -21,6 +23,8 @@ public class PatientCrud {
 	private static Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private PatientCrudDOA patientCrudDOA;
+	@Autowired
+	private ApplicationContext context;
 
 	public void patientPanel() {
 		p_panel: while (true) {
@@ -165,26 +169,39 @@ public class PatientCrud {
 		p_address = scobj.nextLine().trim();
 		System.out.print("\nEnter Patient Contact  --");
 		p_contact = scobj.nextLine().trim();
-		try {
-			int i = patientCrudDOA.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
-			if (i >0 ) {
-				myLogger.info("\n-------Value Has Inserted-------");
-			} else {
-				myLogger.warn("\n-------Value NOT Insert-------");
+
+		PatientDto patientDto = context.getBean(PatientDto.class);
+		patientDto.setId(p_id);
+		patientDto.setName(p_name);
+		patientDto.setWeight(p_weight);
+		patientDto.setAddress(p_address);
+		patientDto.setAge(p_age);
+		patientDto.setGender(p_gender);
+		patientDto.setContact(p_contact);
+		Boolean result = PatientDto.validator(patientDto);
+		if (result) {
+			try {
+				int i = patientCrudDOA.create(p_id, p_name, p_age, p_gender, p_contact, p_weight, p_address);
+				if (i > 0) {
+					myLogger.info("\n-------Value Has Inserted-------");
+				} else {
+					myLogger.warn("\n-------Value NOT Insert-------");
+				}
+			} catch (SQLException e) {
+				myLogger.error(e.getMessage());
+				myLogger.warn(e.getMessage());
 			}
-		} catch (SQLException e) {
-			myLogger.error(e.getMessage());
-			myLogger.warn(e.getMessage());
-
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			patientCreate();
 		}
-
 	}
 
 	@PostConstruct
 	public void start() {
 		myLogger.debug(" Patient Crud  Opeation Panel Start : ");
 		myLogger.info("  Patient  Crud  Opeation Panel Start : ");
-
 	}
 
 	@PreDestroy

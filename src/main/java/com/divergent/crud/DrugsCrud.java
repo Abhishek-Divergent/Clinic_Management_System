@@ -11,9 +11,11 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.divergent.doa.DrugCrudDOA;
+import com.divergent.dto.DrugsDto;
 
 @Component
 public class DrugsCrud {
@@ -21,6 +23,8 @@ public class DrugsCrud {
 	private Scanner scobj = new Scanner(System.in);
 	@Autowired
 	private DrugCrudDOA drugCrudDOA;
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	public void DrugsPanel() {
 
@@ -110,7 +114,6 @@ public class DrugsCrud {
 	}
 
 	private void DrugsCreate() {
-
 		int Drugs_id;
 		String Drugs_name;
 		String Drugs_description;
@@ -120,20 +123,32 @@ public class DrugsCrud {
 		scobj.nextLine();
 		System.out.print("\nEnter Drug Name  -- : ");
 		Drugs_name = scobj.nextLine().trim();
-
 		System.out.print("\nEnter  Drugs_description  -- : ");
 		Drugs_description = scobj.nextLine().trim();
-		try {
-			int i = drugCrudDOA.create(Drugs_id, Drugs_name, Drugs_description);
-			if (i > 0) {
-				myLogger.info("\n-------Value Has Updated-------");
-			} else {
-				myLogger.info("\n-------Value Has Not  Updated-------");
+
+		DrugsDto drugsDto = applicationContext.getBean(DrugsDto.class);
+		drugsDto.setDrugsdescription(Drugs_description);
+		drugsDto.setDrugsid(Drugs_id);
+		drugsDto.setDrugsname(Drugs_description);
+		Boolean result = DrugsDto.validator(drugsDto);
+		if (result) {
+			try {
+				int i = drugCrudDOA.create(Drugs_id, Drugs_name, Drugs_description);
+				if (i > 0) {
+					myLogger.info("\n-------Data Has  Inserted-------");
+				} else {
+					myLogger.info("\n-------Data Has Not Inserted-------");
+				}
+			} catch (Exception e) {
+				myLogger.error(e.getMessage());
+				myLogger.warn(e.getMessage());
 			}
-		} catch (Exception e) {
-			myLogger.error(e.getMessage());
-			myLogger.warn(e.getMessage());
+		} else {
+			myLogger.info("\n-------Data Has Not Inserted-------");
+			myLogger.info("\n-------Enter Again Data -------");
+			DrugsCreate();
 		}
+
 	}
 
 	private void DrugsDelete() {
