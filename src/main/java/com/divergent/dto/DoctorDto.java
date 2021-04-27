@@ -6,9 +6,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.slf4j.Logger;
@@ -20,22 +19,20 @@ import com.divergent.clinicmanagementsystem.ClinicManagementSystem;
 @Component
 public class DoctorDto {
 	private static final Logger myLogger = LoggerFactory.getLogger(ClinicManagementSystem.class.getName());
+	
 	@NotNull(message = "Enter Username/Email")
 	private String username;
 	
     @Range(min=6, message = "Please Enter password more than 6 digit")
 	private String password;
 	
-    @Min(value = 5, message = " Name should not be less than 5 Character")
-	@Max(value = 15, message = " Name should not be more than 15 Character")
+    @Size(min=5,max=25,message="name should not be less than 5 and more than 25")
 	private String name;
-	
-    @Min(value = 10, message = " Number less 10 digit Number")
-	@Max(value = 10, message = " Number is more than 10 digit Number")
+    
+    @Size(min=10,max=10,message="Number must contain 10 digits only")
 	private String contact;
-
-	@Min(value = 5, message = "  speciality should not be less than 5")
-	@Max(value = 15, message = " speciality should not be more  than 15")
+    
+    @Size(min=5,max=25,message="Specialites should not more than 25 digit less than 5")
 	private String speciality;
 	
 	@Range(min = 101, message = "Please Enter Id Like 101.. ")

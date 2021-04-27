@@ -9,34 +9,38 @@ import javax.validation.ValidatorFactory;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.divergent.clinicmanagementsystem.ClinicManagementSystem;
-
+@Component
 public class PatientDto {
 	private static final Logger myLogger = LoggerFactory.getLogger(ClinicManagementSystem.class.getName());
 
 	@Range(min = 1001, message = "Please Enter Id Like 1001.. ")
 	private int id;
+	
 	@Min(value = 18, message = "age should not be less than 18")
-	@Max(value = 50, message = "age should not be more than 100")
+	@Max(value = 100, message = "age should not be more than 100")
 	private int age;
+	
 	@Min(value = 30, message = "Wieght should not be less than 30")
 	private int weight;
-	@Min(value = 5, message = " Name should not be less than 5 Character")
-	@Max(value = 15, message = " Name should not be more than 15 Character")
+	
+	@Size(min=5,max=25,message="name should not be less than 5 and more than 25")
 	private String name;
 
-	@Pattern(regexp = "^[M|F]{1}$", message = "Must be M or F")
+	@Pattern(regexp = "^[m&M|F&f]{1}$", message = "Must be M or F")
 	private String gender;
-	@Min(value = 10, message = " Number less 10 digit Number")
-	@Max(value = 10, message = " Number is more than 10 digit Number")
+	
+	@Size(min=10,max=10,message="Number must contain 10 digits only")
 	private String contact;
-	@Min(value = 5, message = " Address should not be less than 5")
-	@Max(value = 30, message = " Address should not be more  than 45")
+	
+	@Size(min=5,max=45,message="Address should not be less than 5 and more than 45")
 	private String address;
 
 	public int getId() {

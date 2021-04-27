@@ -6,8 +6,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.slf4j.Logger;
@@ -22,13 +21,11 @@ public class DrugsDto {
 
 	@Range(min = 2001, message = "Please Enter Id Like 2001.. ")
 	private int drugsid;
-
-	@Min(value = 5, message = " Name should not be less than 5")
-	@Max(value = 15, message = " Name should not be more  than 15")
+	
+	@Size(min = 5, max = 25, message = "name should not be less than 5 and more than 25")
 	private String drugsname;
-
-	@Min(value = 5, message = " Drug Description should not be less than 5")
-	@Max(value = 15, message = " Drug Description should not be more  than 15")
+	
+	@Size(min = 5, max = 45, message = "name should not be less than 5 and more than 25")
 	private String drugsdescription;
 
 	public int getDrugsid() {

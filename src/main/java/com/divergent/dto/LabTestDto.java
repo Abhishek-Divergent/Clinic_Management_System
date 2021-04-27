@@ -6,7 +6,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.slf4j.Logger;
@@ -21,11 +22,11 @@ public class LabTestDto {
 
 	@Range(min = 1001, message = "Please Enter Id Like 1001.. ")
 	private int labtestid;
-
-	@Range(min = 250, message = "minimum price is of labtest is 250 ")
+   
+	@NotNull
 	private int labtest_price;
-	@Min(value = 5, message = "Lab Test Name should not be less than 5 Character")
-	// @Max(value = 15, message = " Name should not be more than 15 Character")
+	
+	@Size(min = 5, max = 25, message = "name should not be less than 5 and more than 25")
 	private String labtest_name;
 
 	public int getLabtestid() {
