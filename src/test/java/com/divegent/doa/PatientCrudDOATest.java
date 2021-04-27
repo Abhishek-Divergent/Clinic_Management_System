@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.divergent.clinicmanagementsystem.doa.PatientCrudDOA;
 import com.divergent.databaseconnection.H2DatabaseManager;
-import com.divergent.doa.PatientCrudDOA;
 
 class PatientCrudDOATest {
 	Connection connection = null;

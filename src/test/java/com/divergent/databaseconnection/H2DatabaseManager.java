@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.divergent.clinicmanagementsystem.databaseconnection.JDBCConnectionInterface;
+
 public class H2DatabaseManager implements JDBCConnectionInterface {
 
 	public static String DB_URL = "jdbc:h2:~/test";
