@@ -1,10 +1,8 @@
 package com.divergent.clinicmanagementsystem.crud;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -93,25 +91,23 @@ public class Doctor {
 
 	private void patientList() {
 		int tempid = 0;
-		Map<String, Object> list = new HashMap<String, Object>();
-		list = jdbcTemplate
+		Map<String, Object> map ;
+		map= jdbcTemplate
 				.queryForMap("SELECT doc_id FROM  doctor where doc_username='" + doctortempusername + "'");
-		@SuppressWarnings("unchecked")
-		Entry<String, Object> set = (Entry<String, Object>) list.entrySet();
-		tempid = Integer.parseInt(set.getKey());
-
+		tempid=(int) map.get("doc_id");
+		System.out.println(tempid);
+		
+		
+		
 		List<Map<String, Object>> list1 = new ArrayList<>();
 		list1 = jdbcTemplate.queryForList("SELECT * FROM  appoinment where doc_id=" + tempid + "");
 		myLogger.info("\n:--------- Patient Appoinment List --------\n");
 		System.out.printf(
 				"Appoinment_Id \t Patient_Id \t Doctor_Id \t   Doctor_Name \t Patient_Name\t \t Problem \t  Date\t  Time");
-		for (Map<String, Object> map : list1) {
-			for (Entry<String, Object> pair : map.entrySet()) {
-				System.out.printf("%10s", pair.getValue());
-			}
-			System.out.println();
-		}
-	}
+		System.out.println(list1 +" \t");
+
+}
+	
 
 	@PostConstruct
 	public void start() {
